@@ -1,0 +1,22 @@
+{
+  "name": "code-pen-clone",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.1",
+    "autoprefixer": "^10.4.8",
+    "postcss": "^8.4.14",
+    "svelte": "^3.49.0",
+    "tailwindcss": "^3.1.7",
+    "vite": "^3.0.0"
+  },
+  "dependencies": {
+    "codemirror": "5"
+  }
+}
