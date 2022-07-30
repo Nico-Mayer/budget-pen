@@ -1,20 +1,27 @@
 <script>
   import Editor from "./lib/components/Editor.svelte"
+  import { onMount } from "svelte"
 
   let html = "<h1>Hello World</h1>"
   let css = "body { color: red; }"
   let js = "document.body.style.background = 'blue'"
   let srcDoc = ``
   let cooldownTimer
+  let iframe
+
   $: {
     clearTimeout(cooldownTimer)
     cooldownTimer = setTimeout(async () => {
-      srcDoc = `<html><body>${html}</body><style>${css}</style><script>${js}<\/script></html>`
+      srcDoc = `
+      <html>
+        <body>${html}</body>
+        <style>${css}</style>
+      <script>${js}<\/script>
+  </html>`
     }, 320)
   }
 </script>
 
-// @ts-nocheck
 <main class="w-screen h-screen">
   <section class="pane top-pane flex w-full space-x-4">
     <Editor title={"HTML"} lang={"xml"} bind:value={html} />
@@ -23,6 +30,7 @@
   </section>
   <section class="pane">
     <iframe
+      bind:this={iframe}
       {srcDoc}
       title="output"
       sandbox="allow-scripts"

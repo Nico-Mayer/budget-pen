@@ -6,11 +6,12 @@
   import "codemirror/mode/css/css"
   import "codemirror/mode/xml/xml"
   import CodeMirror from "codemirror"
-  import { onMount, beforeUpdate } from "svelte"
+  import { onMount } from "svelte"
 
   export let value
   export let lang
   export let title
+
   let textArea
 
   onMount(() => {
