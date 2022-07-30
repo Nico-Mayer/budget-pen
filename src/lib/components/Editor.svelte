@@ -45,12 +45,9 @@
   .editor-container {
     display: flex;
     flex-direction: column;
-    background-color: #22272e;
-    color: white;
     flex-grow: 1;
-    flex-basis: 0;
-    border-radius: 1rem;
-    overflow: hidden;
+    color: white;
+    width: 100%;
   }
   .top-bar {
     padding: 10px 30px;

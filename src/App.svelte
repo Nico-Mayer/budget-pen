@@ -1,49 +1,46 @@
 <script>
   import Editor from "./lib/components/Editor.svelte"
-  import { onMount } from "svelte"
 
   let html = "<h1>Hello World</h1>"
-  let css = "body { color: red; }"
-  let js = "document.body.style.background = 'blue'"
-  let srcDoc = ``
+  let css = ""
+  let js = "document.body.style.background = '#263238'"
   let cooldownTimer
   let iframe
 
   $: {
     clearTimeout(cooldownTimer)
     cooldownTimer = setTimeout(async () => {
-      srcDoc = `
+      let output = iframe.contentWindow.document
+      output.open()
+      output.write(
+        `
       <html>
+        <head>
+          <script src="https://cdn.tailwindcss.com"><\/script>  
+        </head>
         <body>${html}</body>
         <style>${css}</style>
-      <script>${js}<\/script>
-  </html>`
+        <script>${js}<\/script>
+      </html>`
+      )
+      output.close()
     }, 320)
   }
-</script>
+</script  1                                                                           >
 
-<main class="w-screen h-screen">
-  <section class="pane top-pane flex w-full space-x-4">
+<main class="w-screen h-screen flex">
+  <section class="flex flex-col w-[410px] space-y-4 bg-[#22272E]">
     <Editor title={"HTML"} lang={"xml"} bind:value={html} />
     <Editor title={"CSS"} lang={"css"} bind:value={css} />
     <Editor title={"JS"} lang={"javascript"} bind:value={js} />
   </section>
-  <section class="pane">
+  <section class="flex flex-1">
     <iframe
       bind:this={iframe}
-      {srcDoc}
       title="output"
-      sandbox="allow-scripts"
       frameborder="0"
       width="100%"
       height="100%"
     />
   </section>
 </main>
-
-<style>
-  .pane {
-    height: 50%;
-    background-color: white;
-  }
-</style>
