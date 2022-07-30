@@ -26,7 +26,7 @@
       output.close()
     }, 320)
   }
-</script  1                                                                           >
+</script>
 
 <main class="w-screen h-screen flex">
   <section class="flex flex-col w-[410px] space-y-4 bg-[#22272E]">
