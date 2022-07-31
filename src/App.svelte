@@ -1,9 +1,9 @@
 <script>
   import Editor from "./lib/components/Editor.svelte"
 
-  let html = "<h1 class='text-white font-mono text-7xl'>Hello World</h1>"
+  let html = "<h1 class='text-7xl p-6 animate-bounce'>Hello World</h1>"
   let css = ""
-  let js = "document.body.style.background = '#2E3440'"
+  let js = ""
   let cooldownTimer
   let sidebar
   let iframe
@@ -30,31 +30,12 @@
     }, 320)
   }
 
-  /*   $: {
-    clearTimeout(cooldownTimer)
-    cooldownTimer = setTimeout(async () => {
-      let output = iframe.contentWindow.document
-      output.open()
-      output.write(
-        `
-      <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Document</title>
-          <script src="https://cdn.tailwindcss.com"><\/script>  
-        </head>
-        <body>${html}</body>
-        <style>${css}</style>
-        <script>${js}<\/script>
-      </html>`
-      )
-      output.location.reload()
-      output.close()
-    }, 320)
-  */
+  function handleEditorResize(editor) {
+    console.log(editor)
+    console.log("resizing")
+  }
 
-  function handleMouseDown() {
+  function handleSidebarResize() {
     resizing = true
     window.addEventListener("mousemove", handleMouseMove)
     window.addEventListener("mouseup", handleMouseUp)
@@ -75,16 +56,37 @@
 </script>
 
 <main class="w-screen h-screen flex">
-  <section bind:this={sidebar} class="sidebar flex w-[472px] bg-[#22272E]">
-    <div class="flex flex-col w-full space-y-4 ">
-      <Editor title={"HTML"} lang={"xml"} bind:value={html} />
-      <Editor title={"CSS"} lang={"css"} bind:value={css} />
-      <Editor title={"JS"} lang={"javascript"} bind:value={js} />
+  <section bind:this={sidebar} class="sidebar flex w-[472px]">
+    <div class="flex flex-col w-full relative">
+      <div class="h-full absolute bottom-0 right-0 left-0">
+        <Editor
+          title={"HTML"}
+          lang={"xml"}
+          bind:value={html}
+          topbarMouseDown={handleEditorResize}
+        />
+      </div>
+      <div class="h-[50%] absolute bottom-0 right-0 left-0">
+        <Editor
+          title={"CSS"}
+          lang={"css"}
+          bind:value={css}
+          topbarMouseDown={handleEditorResize}
+        />
+      </div>
+      <div class="absolute bottom-0 right-0 left-0 h-60">
+        <Editor
+          title={"JS"}
+          lang={"javascript"}
+          bind:value={js}
+          topbarMouseDown={handleEditorResize}
+        />
+      </div>
     </div>
     <div
       bind:this={resizer}
-      on:mousedown={handleMouseDown}
-      class="flex h-full w-[20px] cursor-col-resize border-white/20 border-x"
+      on:mousedown={handleSidebarResize}
+      class="flex h-full w-[20px] cursor-col-resize border-white/20 border-x bg-[#22272E]"
     />
   </section>
 
