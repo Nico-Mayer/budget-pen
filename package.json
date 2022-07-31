@@ -17,6 +17,7 @@
     "vite": "^3.0.0"
   },
   "dependencies": {
-    "codemirror": "5"
+    "codemirror": "5",
+    "svelte-splitpanes": "^0.7.1"
   }
 }
