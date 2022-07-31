@@ -5,3 +5,6 @@
 body {
   magin: 0;
 }
+.CodeMirror {
+  height: 100%;
+}
