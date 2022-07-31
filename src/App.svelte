@@ -6,11 +6,6 @@
 	let js = '';
 	let cooldownTimer;
 	let sidebar;
-	let iframe;
-
-	let editorConHTML;
-	let editorConCSS;
-	let editorConJS;
 
 	let resizing = false;
 	let srcDoc;
@@ -82,7 +77,6 @@
 		<iframe
 			srcdoc={srcDoc}
 			sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads allow-presentation"
-			bind:this={iframe}
 			title="output"
 			frameborder="0"
 			width="100%"
@@ -93,8 +87,8 @@
 
 <style>
 	:global(.splitpanes__splitter) {
-		background-color: red;
+		background-color: black;
 		position: relative;
-		height: 100px;
+		height: 15px;
 	}
 </style>
