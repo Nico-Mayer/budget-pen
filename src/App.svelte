@@ -8,7 +8,10 @@
   let sidebar
   let iframe
 
-  let resizer
+  let editorConHTML
+  let editorConCSS
+  let editorConJS
+
   let resizing = false
   let srcDoc
 
@@ -30,9 +33,38 @@
     }, 320)
   }
 
-  function handleEditorResize(editor) {
-    console.log(editor)
-    console.log("resizing")
+  function handleEditorResize(editorType) {
+    let container
+    switch (editorType) {
+      case "html":
+        container = editorConHTML
+        break
+      case "css":
+        container = editorConCSS
+        break
+      case "js":
+        container = editorConJS
+        break
+    }
+    resizing = true
+    window.addEventListener("mousemove", handleMouseMove)
+    window.addEventListener("mouseup", handleMouseUp)
+    function handleMouseMove(e) {
+      if (
+        editorType !== "html" &&
+        e.clientY > 44 &&
+        e.clientY < window.innerHeight - 44
+      ) {
+        container.style.top = e.clientY + "px"
+        document.body.style.cursor = "row-resize"
+      }
+    }
+    function handleMouseUp() {
+      resizing = false
+      document.body.style.cursor = "auto"
+      window.removeEventListener("mousemove", handleMouseMove)
+      window.removeEventListener("mouseup", handleMouseUp)
+    }
   }
 
   function handleSidebarResize() {
@@ -57,8 +89,11 @@
 
 <main class="w-screen h-screen flex">
   <section bind:this={sidebar} class="sidebar flex w-[472px]">
-    <div class="flex flex-col w-full relative">
-      <div class="h-full absolute bottom-0 right-0 left-0">
+    <div class="flex h-full flex-col w-full relative">
+      <div
+        class="flex flex-col absolute top-0 left-0 right-0 bottom-0"
+        bind:this={editorConHTML}
+      >
         <Editor
           title={"HTML"}
           lang={"xml"}
@@ -66,15 +101,10 @@
           topbarMouseDown={handleEditorResize}
         />
       </div>
-      <div class="h-[50%] absolute bottom-0 right-0 left-0">
-        <Editor
-          title={"CSS"}
-          lang={"css"}
-          bind:value={css}
-          topbarMouseDown={handleEditorResize}
-        />
-      </div>
-      <div class="absolute bottom-0 right-0 left-0 h-60">
+      <div
+        class="flex absolute top-1/3 left-0 right-0 bottom-0"
+        bind:this={editorConJS}
+      >
         <Editor
           title={"JS"}
           lang={"javascript"}
@@ -82,9 +112,19 @@
           topbarMouseDown={handleEditorResize}
         />
       </div>
+      <div
+        class="flex absolute top-2/3 left-0 right-0 bottom-0"
+        bind:this={editorConCSS}
+      >
+        <Editor
+          title={"CSS"}
+          lang={"css"}
+          bind:value={css}
+          topbarMouseDown={handleEditorResize}
+        />
+      </div>
     </div>
     <div
-      bind:this={resizer}
       on:mousedown={handleSidebarResize}
       class="flex h-full w-[20px] cursor-col-resize border-white/20 border-x bg-[#22272E]"
     />

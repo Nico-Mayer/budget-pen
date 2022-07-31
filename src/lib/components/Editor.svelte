@@ -34,7 +34,7 @@
 </script>
 
 <div class="editor-container">
-  <div class="top-bar" on:mousedown={topbarMouseDown(title)}>
+  <div class="top-bar" on:mousedown={topbarMouseDown(title.toLowerCase())}>
     <span>{title}</span>
     <button>O/C</button>
   </div>
@@ -47,10 +47,9 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    border: 1px solid #ff0;
+    /* border: 1px solid #ff0; */
     color: white;
     width: 100%;
-    height: 100%;
   }
   .top-bar {
     padding: 10px 30px;
