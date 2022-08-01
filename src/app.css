@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 body {
-  magin: 0;
+	magin: 0;
+}
+.CodeMirror {
+	height: 100%;
+	font-size: 14px;
 }

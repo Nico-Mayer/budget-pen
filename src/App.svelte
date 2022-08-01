@@ -1,46 +1,109 @@
 <script>
-  import Editor from "./lib/components/Editor.svelte"
+	import Editor from './lib/components/Editor.svelte';
+	import { Pane, Splitpanes } from 'svelte-splitpanes';
+	let html = "<h1 class='text-7xl p-6 animate-bounce'>Hello World</h1>";
+	let css = '';
+	let js = '';
+	let cooldownTimer;
+	let sidebar;
 
-  let html = "<h1>Hello World</h1>"
-  let css = ""
-  let js = "document.body.style.background = '#263238'"
-  let cooldownTimer
-  let iframe
+	let resizing = false;
+	let srcDoc;
 
-  $: {
-    clearTimeout(cooldownTimer)
-    cooldownTimer = setTimeout(async () => {
-      let output = iframe.contentWindow.document
-      output.open()
-      output.write(
-        `
-      <html>
+	$: {
+		clearTimeout(cooldownTimer);
+		cooldownTimer = setTimeout(async () => {
+			srcDoc = `
+      <html lang="en">
         <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Document</title>
           <script src="https://cdn.tailwindcss.com"><\/script>  
         </head>
         <body>${html}</body>
         <style>${css}</style>
         <script>${js}<\/script>
-      </html>`
-      )
-      output.close()
-    }, 320)
-  }
+      </html>`;
+		}, 320);
+	}
+
+	function handleSidebarResize() {
+		resizing = true;
+		window.addEventListener('mousemove', handleMouseMove);
+		window.addEventListener('mouseup', handleMouseUp);
+
+		function handleMouseMove(e) {
+			if (e.clientX > 300) {
+				sidebar.style.width = e.clientX + 'px';
+				document.body.style.cursor = 'col-resize';
+			}
+		}
+		function handleMouseUp() {
+			resizing = false;
+			document.body.style.cursor = 'auto';
+			window.removeEventListener('mousemove', handleMouseMove);
+			window.removeEventListener('mouseup', handleMouseUp);
+		}
+	}
 </script>
 
 <main class="w-screen h-screen flex">
-  <section class="flex flex-col w-[410px] space-y-4 bg-[#22272E]">
-    <Editor title={"HTML"} lang={"xml"} bind:value={html} />
-    <Editor title={"CSS"} lang={"css"} bind:value={css} />
-    <Editor title={"JS"} lang={"javascript"} bind:value={js} />
-  </section>
-  <section class="flex flex-1">
-    <iframe
-      bind:this={iframe}
-      title="output"
-      frameborder="0"
-      width="100%"
-      height="100%"
-    />
-  </section>
+	<section bind:this={sidebar} class="sidebar flex w-[472px]">
+		<Splitpanes horizontal={true} theme="test">
+			<Pane minSize={3.5} maxSize={100}>
+				<Editor title={'HTML'} lang={'xml'} bind:value={html} />
+			</Pane>
+
+			<Pane minSize={3.5} maxSize={100}>
+				<Editor title={'JS'} lang={'javascript'} bind:value={js} />
+			</Pane>
+
+			<Pane minSize={3.5} maxSize={100}>
+				<Editor title={'CSS'} lang={'css'} bind:value={css} />
+			</Pane>
+		</Splitpanes>
+
+		<div
+			on:mousedown={handleSidebarResize}
+			class="flex h-full w-[20px] cursor-col-resize border-white/20 border-x bg-[#22272E]"
+		/>
+	</section>
+
+	<section class="flex flex-1 relativ">
+		{#if resizing}
+			<div class="bg-transparent w-full h-full absolute left-0 top-0" />
+		{/if}
+		<iframe
+			srcdoc={srcDoc}
+			sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads allow-presentation"
+			title="output"
+			frameborder="0"
+			width="100%"
+			height="100%"
+		/>
+	</section>
 </main>
+
+<style>
+	:global(.splitpanes__splitter) {
+		background-color: #2e3440;
+		position: relative;
+	}
+	:global(.splitpanes__splitter:before) {
+		content: ' ';
+		position: absolute;
+		left: 0;
+		top: 0;
+		transition: opacity 0.4s;
+		background-color: rgba(255, 0, 0, 0.3);
+		opacity: 0;
+		z-index: 1;
+	}
+
+	:global(.splitpanes--horizontal > .splitpanes__splitter:before) {
+		top: 0px;
+		bottom: -44px;
+		width: 100%;
+	}
+</style>
