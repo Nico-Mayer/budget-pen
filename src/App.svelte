@@ -51,15 +51,15 @@
 <main class="w-screen h-screen flex">
 	<section bind:this={sidebar} class="sidebar flex w-[472px]">
 		<Splitpanes horizontal={true} theme="test">
-			<Pane minSize={4} maxSize={100}>
+			<Pane minSize={3.5} maxSize={100}>
 				<Editor title={'HTML'} lang={'xml'} bind:value={html} />
 			</Pane>
 
-			<Pane minSize={3} maxSize={100}>
+			<Pane minSize={3.5} maxSize={100}>
 				<Editor title={'JS'} lang={'javascript'} bind:value={js} />
 			</Pane>
 
-			<Pane minSize={3} maxSize={100}>
+			<Pane minSize={3.5} maxSize={100}>
 				<Editor title={'CSS'} lang={'css'} bind:value={css} />
 			</Pane>
 		</Splitpanes>
@@ -87,8 +87,23 @@
 
 <style>
 	:global(.splitpanes__splitter) {
-		background-color: black;
+		background-color: #2e3440;
 		position: relative;
-		height: 15px;
+	}
+	:global(.splitpanes__splitter:before) {
+		content: ' ';
+		position: absolute;
+		left: 0;
+		top: 0;
+		transition: opacity 0.4s;
+		background-color: rgba(255, 0, 0, 0.3);
+		opacity: 0;
+		z-index: 1;
+	}
+
+	:global(.splitpanes--horizontal > .splitpanes__splitter:before) {
+		top: 0px;
+		bottom: -44px;
+		width: 100%;
 	}
 </style>
