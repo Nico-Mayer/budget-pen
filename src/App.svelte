@@ -1,5 +1,5 @@
 <script>
-	import { resizing, html, css, js } from './lib/stores/store.js';
+	import { resizing, html, css, js, tailwind } from './lib/stores/store.js';
 
 	import Sidebar from './lib/components/Sidebar.svelte';
 	import Navbar from './lib/components/Navbar.svelte';
@@ -7,6 +7,7 @@
 
 	let srcDoc;
 	let cooldownTimer;
+
 	$: {
 		clearTimeout(cooldownTimer);
 		cooldownTimer = setTimeout(async () => {
@@ -16,7 +17,7 @@
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>Document</title>
-          <script src="https://cdn.tailwindcss.com"><\/script>  
+          ${$tailwind ? `<script src='https://cdn.tailwindcss.com'/><\/script>` : ''}
         </head>
         <body>${$html}</body>
         <style>${$css}</style>
