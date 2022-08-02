@@ -14,7 +14,6 @@
 
 	export let value;
 	export let lang;
-	export let title;
 
 	let textArea;
 
@@ -40,11 +39,6 @@
 </script>
 
 <div class="editor-container">
-	<div class="top-bar">
-		<span>{title}</span>
-		<button>O/C</button>
-	</div>
-
 	<textarea bind:this={textArea} bind:value readonly />
 </div>
 
@@ -57,11 +51,5 @@
 		color: white;
 		width: 100%;
 		height: 100%;
-	}
-	.top-bar {
-		padding: 10px 30px;
-		background-color: #22272e;
-		display: flex;
-		justify-content: space-between;
 	}
 </style>

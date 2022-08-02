@@ -1,7 +1,8 @@
 <script>
 	import Editor from './lib/components/Editor.svelte';
 	import { Pane, Splitpanes } from 'svelte-splitpanes';
-	let html = "<h1 class='text-7xl p-6 animate-bounce'>Hello World</h1>";
+	import { onMount } from 'svelte';
+	let html = '';
 	let css = '';
 	let js = '';
 	let cooldownTimer;
@@ -46,64 +47,107 @@
 			window.removeEventListener('mouseup', handleMouseUp);
 		}
 	}
+
+	onMount(() => {
+		let splitters = document.querySelectorAll('.splitpanes__splitter');
+
+		for (let i = 0; i < splitters.length; i++) {
+			switch (i) {
+				case 0:
+					splitters[i].classList.add('html-splitter');
+					break;
+				case 1:
+					splitters[i].classList.add('js-splitter');
+					break;
+				case 2:
+					splitters[i].classList.add('css-splitter');
+					break;
+			}
+		}
+	});
 </script>
 
-<main class="w-screen h-screen flex">
-	<section bind:this={sidebar} class="sidebar flex w-[472px]">
-		<Splitpanes horizontal={true} theme="test">
-			<Pane minSize={3.5} maxSize={100}>
-				<Editor title={'HTML'} lang={'xml'} bind:value={html} />
-			</Pane>
+<main class="w-screen h-screen flex flex-col overflow-hidden">
+	<div class="h-14 bg-[#22272e] w-full" />
 
-			<Pane minSize={3.5} maxSize={100}>
-				<Editor title={'JS'} lang={'javascript'} bind:value={js} />
-			</Pane>
+	<div class="flex h-full overflow-hidden">
+		<section bind:this={sidebar} class="sidebar flex w-[472px]">
+			<Splitpanes horizontal={true} theme="own" firstSplitter={true}>
+				<Pane maxSize={100} class="html-pane">
+					<Editor lang={'xml'} bind:value={html} />
+				</Pane>
 
-			<Pane minSize={3.5} maxSize={100}>
-				<Editor title={'CSS'} lang={'css'} bind:value={css} />
-			</Pane>
-		</Splitpanes>
+				<Pane maxSize={100}>
+					<Editor lang={'javascript'} bind:value={js} />
+				</Pane>
 
-		<div
-			on:mousedown={handleSidebarResize}
-			class="flex h-full w-[20px] cursor-col-resize border-white/20 border-x bg-[#22272E]"
-		/>
-	</section>
+				<Pane maxSize={100}>
+					<Editor lang={'css'} bind:value={css} />
+				</Pane>
+			</Splitpanes>
 
-	<section class="flex flex-1 relativ">
-		{#if resizing}
-			<div class="bg-transparent w-full h-full absolute left-0 top-0" />
-		{/if}
-		<iframe
-			srcdoc={srcDoc}
-			sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads allow-presentation"
-			title="output"
-			frameborder="0"
-			width="100%"
-			height="100%"
-		/>
-	</section>
+			<div
+				on:mousedown={handleSidebarResize}
+				class="flex h-full w-[20px] cursor-col-resize border-white/10 border-x border-t bg-[#22272E]"
+			/>
+		</section>
+
+		<section class="flex flex-1 relativ">
+			{#if resizing}
+				<div class="bg-transparent w-full h-full absolute left-0 top-0" />
+			{/if}
+			<iframe
+				srcdoc={srcDoc}
+				sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads allow-presentation"
+				title="output"
+				frameborder="0"
+				width="100%"
+				height="100%"
+			/>
+		</section>
+	</div>
+	<div class="bg-[#22272e] border-t border-white/10 h-7 w-full" />
 </main>
 
 <style>
 	:global(.splitpanes__splitter) {
-		background-color: #2e3440;
+		height: 44px;
 		position: relative;
+		@apply border-t;
+		@apply border-white/10;
+		background-color: #22272e;
 	}
 	:global(.splitpanes__splitter:before) {
-		content: ' ';
 		position: absolute;
+		display: flex;
+		align-items: center;
+		padding-left: 50px;
+		@apply font-mono;
+		@apply border-t-4;
+		@apply border-white/20;
+		color: white;
 		left: 0;
+		right: 0;
+		bottom: 0;
 		top: 0;
-		transition: opacity 0.4s;
-		background-color: rgba(255, 0, 0, 0.3);
-		opacity: 0;
+		opacity: 1;
 		z-index: 1;
+		background-color: #2e3440;
+		background-repeat: no-repeat;
+		background-position: 15px 50%;
+		background-size: 20px;
+		width: 110px;
 	}
-
-	:global(.splitpanes--horizontal > .splitpanes__splitter:before) {
-		top: 0px;
-		bottom: -44px;
-		width: 100%;
+	:global(.html-splitter.splitpanes__splitter:before) {
+		content: 'HTML';
+		background-image: url('https://api.iconify.design/icomoon-free:html-five.svg?color=%23FF694B');
+	}
+	:global(.js-splitter.splitpanes__splitter:before) {
+		content: 'JS';
+		background-image: url('https://api.iconify.design/cib:javascript.svg?color=%23F7DD1E');
+	}
+	:global(.css-splitter.splitpanes__splitter:before) {
+		content: 'CSS';
+		background-image: url('https://api.iconify.design/icomoon-free:css3.svg?color=%2330ace0');
 	}
 </style>
