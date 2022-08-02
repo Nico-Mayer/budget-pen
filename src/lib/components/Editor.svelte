@@ -1,7 +1,7 @@
 <script>
 	// @ts-nocheck
 	import 'codemirror/lib/codemirror.css';
-	import 'codemirror/theme/nord.css';
+	import 'codemirror/theme/ayu-mirage.css';
 	import 'codemirror/mode/javascript/javascript';
 	import 'codemirror/mode/css/css';
 	import 'codemirror/mode/xml/xml';
@@ -23,10 +23,13 @@
 			mode: lang,
 			smartIndent: true,
 			lineNumbers: true,
-			theme: 'nord',
+			theme: 'ayu-mirage',
 			scrollbarStyle: 'null',
 			autoCloseTags: true,
-			autoCloseBrackets: true
+			autoCloseBrackets: {
+				pairs: '()[]{}\'\'""',
+				explode: '()[]{}\'\'""><'
+			}
 		});
 		editor.focus();
 		editor.on('change', () => {

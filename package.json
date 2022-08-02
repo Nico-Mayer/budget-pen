@@ -1,27 +1,29 @@
 {
-  "name": "code-pen-clone",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "@iconify-json/carbon": "^1.1.7",
-    "@sveltejs/vite-plugin-svelte": "^1.0.1",
-    "@unocss/core": "^0.45.1",
-    "@unocss/preset-icons": "^0.45.1",
-    "@unocss/preset-uno": "^0.45.1",
-    "@unocss/reset": "^0.45.1",
-    "@unocss/transformer-directives": "^0.45.1",
-    "svelte": "^3.49.0",
-    "unocss": "^0.45.1",
-    "vite": "^3.0.0"
-  },
-  "dependencies": {
-    "codemirror": "5",
-    "svelte-splitpanes": "^0.7.1"
-  }
+	"name": "code-pen-clone",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"devDependencies": {
+		"@iconify-json/carbon": "^1.1.7",
+		"@iconify-json/charm": "^1.1.3",
+		"@iconify-json/simple-icons": "^1.1.20",
+		"@sveltejs/vite-plugin-svelte": "^1.0.1",
+		"@unocss/core": "^0.45.1",
+		"@unocss/preset-icons": "^0.45.1",
+		"@unocss/preset-uno": "^0.45.1",
+		"@unocss/reset": "^0.45.1",
+		"@unocss/transformer-directives": "^0.45.1",
+		"svelte": "^3.49.0",
+		"unocss": "^0.45.1",
+		"vite": "^3.0.0"
+	},
+	"dependencies": {
+		"codemirror": "5",
+		"svelte-splitpanes": "^0.7.1"
+	}
 }

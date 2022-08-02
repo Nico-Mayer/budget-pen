@@ -44,7 +44,7 @@
 	});
 </script>
 
-<section bind:this={sidebar} class="flex w-[472px] bg-[#2E3440]">
+<section bind:this={sidebar} class="flex w-[472px] bg-[#3B4252]">
 	<Splitpanes horizontal={true} theme="own" firstSplitter={true}>
 		<Pane maxSize={100} class="html-pane">
 			<Editor lang={'xml'} bind:value={$html} />
@@ -61,8 +61,10 @@
 
 	<div
 		on:mousedown={handleSidebarResize}
-		class="flex h-full w-[20px] cursor-col-resize border-white/10 border-x border-t bg-[#22272E]"
-	/>
+		class="flex h-full w-[14px] cursor-col-resize border-x border-t border-white/5 bg-[#1c212b] items-center "
+	>
+		<div class="i-charm-menu-hamburger rotate-90 text-white/30" />
+	</div>
 </section>
 
 <style>
@@ -70,8 +72,8 @@
 		height: 44px;
 		position: relative;
 		@apply border-t;
-		@apply border-white/10;
-		background-color: #22272e;
+		@apply border-white/5;
+		background-color: #1c212b;
 	}
 	:global(.splitpanes__splitter:before) {
 		position: absolute;
@@ -79,7 +81,7 @@
 		align-items: center;
 		padding-left: 50px;
 		@apply font-mono;
-		@apply border-t-4;
+		@apply border-t-3;
 		@apply border-white/20;
 		color: white;
 		left: 0;
@@ -88,7 +90,7 @@
 		top: 0;
 		opacity: 1;
 		z-index: 1;
-		background-color: #2e3440;
+		background-color: #1f2430;
 		background-repeat: no-repeat;
 		background-position: 15px 50%;
 		background-size: 20px;
