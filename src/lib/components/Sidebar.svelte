@@ -44,7 +44,7 @@
 	});
 </script>
 
-<section bind:this={sidebar} class="flex w-[472px]">
+<section bind:this={sidebar} class="flex w-[472px] bg-[#2E3440]">
 	<Splitpanes horizontal={true} theme="own" firstSplitter={true}>
 		<Pane maxSize={100} class="html-pane">
 			<Editor lang={'xml'} bind:value={$html} />
