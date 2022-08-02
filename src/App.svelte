@@ -47,3 +47,13 @@
 	</section>
 	<Footer />
 </main>
+
+<style>
+	:global(.CodeMirror) {
+		height: 100%;
+		font-size: 17px;
+	}
+	:global(body) {
+		margin: 0;
+	}
+</style>
