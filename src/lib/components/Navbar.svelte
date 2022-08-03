@@ -9,7 +9,7 @@
 </script>
 
 <div
-	class="h-16 dark:(bg-[#1c212b] border-none) bg-white w-full flex items-center px-3 justify-between font-mono border-b border-black/20"
+	class="h-16 dark:(bg-[#1c212b]) bg-white w-full flex items-center px-3 justify-between font-mono border-black/20"
 >
 	<section class="flex items-center space-x-4 select-none">
 		<div

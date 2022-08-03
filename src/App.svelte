@@ -36,6 +36,7 @@
 				<div class="bg-transparent w-full h-full absolute left-0 top-0" />
 			{/if}
 			<iframe
+				class="border-t border-black/20 dark:border-none"
 				srcdoc={srcDoc}
 				sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads allow-presentation"
 				title="output"

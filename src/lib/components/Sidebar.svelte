@@ -61,7 +61,7 @@
 
 	<div
 		on:mousedown={handleSidebarResize}
-		class="flex h-full w-[14px] cursor-col-resize border-x dark:(border-white/5 bg-[#1c212b] border-t) border-black/20 items-center "
+		class="flex h-full w-[14px] cursor-col-resize border-x dark:(border-white/5 bg-[#1c212b]) border-black/20 items-center border-t"
 	>
 		<div class="i-charm-menu-hamburger rotate-90 dark:text-white/30 text-black/60" />
 	</div>
@@ -72,8 +72,10 @@
 		height: 44px;
 		position: relative;
 		@apply border-t;
-		@apply border-white/5;
-		background-color: #1c212b;
+		@apply border-black/20;
+		--at-apply: 'dark:border-white/5';
+		--at-apply: 'dark:bg-#1c212b';
+		@apply bg-[#F7F7F7];
 		cursor: row-resize;
 	}
 	:global(.splitpanes__splitter:before) {
@@ -84,13 +86,15 @@
 		@apply font-mono;
 		@apply border-t-3;
 		@apply border-white/10;
-		color: white;
+		color: black;
 		left: 0;
 		right: 0;
 		bottom: 0;
 		top: 0;
 		z-index: 1;
-		background-color: #1f2430;
+		--at-apply: 'dark:text-white';
+		--at-apply: 'dark:bg-#1f2430';
+		background-color: #f7f7f7;
 		background-repeat: no-repeat;
 		background-position: 15px 50%;
 		background-size: 20px;
