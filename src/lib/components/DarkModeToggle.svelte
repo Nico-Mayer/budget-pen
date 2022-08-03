@@ -4,14 +4,14 @@
 </script>
 
 <button
-	class="w-16 h-8 dark:(bg-[#63759925] border-none) border-black/50 border flex items-center rounded-full text-base relative"
+	class="w-[48px] h-[29px] border flex items-center rounded-full text-base relative border-uiLineLight bg-panelFgLight dark:(border-uiLineDark bg-panelFgDark)"
 	on:click={() => ($isDark = !$isDark)}
 >
 	<div
-		class="bg-[#ffcc66]/50 dark:bg-[#695380] rounded-full h-7 w-7 flex justify-center items-center transition-all duration-700 absolute left-[3px] dark:left-[32px] hover:rotate-28"
+		class="rounded-full h-6 w-6 bg-accentLight flex justify-center items-center transition-all duration-700 absolute left-[2px] dark:(bg-accentDark left-[20px] text-black) hover:rotate-28"
 	>
 		{#key $isDark}
-			<div class="i-carbon-sun dark:i-carbon-moon text-black/50 dark:text-[#cccac2]" in:slide />
+			<div class="i-carbon-sun dark:i-carbon-moon" in:slide />
 		{/key}
 	</div>
 </button>

@@ -27,7 +27,9 @@
 	}
 </script>
 
-<main class="w-screen h-screen flex flex-col overflow-hidden min-w-[700px]">
+<main
+	class="w-screen h-screen flex flex-col overflow-hidden min-w-[700px] text-fontLight dark:text-fontDark font-mono"
+>
 	<Navbar />
 	<section class="flex h-full overflow-hidden">
 		<Sidebar />
@@ -36,7 +38,6 @@
 				<div class="bg-transparent w-full h-full absolute left-0 top-0" />
 			{/if}
 			<iframe
-				class="border-t border-black/20 dark:border-none"
 				srcdoc={srcDoc}
 				sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads allow-presentation"
 				title="output"
@@ -51,6 +52,7 @@
 
 <style>
 	:global(.CodeMirror) {
+		--at-apply: 'bg-editorBgLight dark:bg-editorBgDark';
 		height: 100%;
 		font-size: 17px;
 	}

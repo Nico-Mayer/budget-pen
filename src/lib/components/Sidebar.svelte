@@ -44,7 +44,7 @@
 	});
 </script>
 
-<section bind:this={sidebar} class="flex w-[472px] dark:bg-[#3B4252]">
+<section bind:this={sidebar} class="flex w-[472px]">
 	<Splitpanes horizontal={true} theme="own" firstSplitter={true}>
 		<Pane maxSize={100} class="html-pane">
 			<Editor lang={'xml'} bind:value={$html} />
@@ -61,9 +61,9 @@
 
 	<div
 		on:mousedown={handleSidebarResize}
-		class="flex h-full w-[14px] cursor-col-resize border-x dark:(border-white/5 bg-[#1c212b]) border-black/20 items-center border-t"
+		class="flex h-full w-[14px] cursor-col-resize border-x border-uiLineLight bg-panelBgLight dark:(border-uiLineDark bg-panelBgDark) items-center "
 	>
-		<div class="i-charm-menu-hamburger rotate-90 dark:text-white/30 text-black/60" />
+		<div class="i-charm-menu-hamburger rotate-90 dark:text-fontDark text-fontLight" />
 	</div>
 </section>
 
@@ -73,33 +73,19 @@
 		border: none;
 	}
 	:global(.splitpanes__splitter) {
+		--at-apply: 'border-t border-uiLineLight dark:border-uiLineDark';
+		--at-apply: 'bg-panelBgLight dark:bg-panelBgDark';
 		height: 44px;
 		position: relative;
-		@apply border-t;
-		@apply border-black/20;
-		--at-apply: 'dark:border-white/5';
-		--at-apply: 'dark:bg-#1c212b';
-		@apply bg-[#F7F7F7];
 		cursor: row-resize;
 	}
 	:global(.splitpanes__splitter:before) {
-		position: absolute;
+		--at-apply: 'bg-editorBgLight dark:bg-editorBgDark';
+		--at-apply: 'border-t-3 dark:border-white/10 border-black/20';
 		display: flex;
 		align-items: center;
 		padding-left: 50px;
-		@apply font-mono;
-		@apply border-t-3;
-		@apply border-black/20;
-		color: black;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		top: 0;
-		z-index: 1;
-		--at-apply: 'dark:text-white';
-		--at-apply: 'dark:bg-#1f2430';
-		--at-apply: 'dark:border-white/10;';
-		background-color: white;
+		height: 100%;
 		background-repeat: no-repeat;
 		background-position: 15px 50%;
 		background-size: 20px;
@@ -107,6 +93,7 @@
 	}
 	:global(.html-splitter) {
 		cursor: auto;
+		border: none;
 	}
 	:global(.html-splitter.splitpanes__splitter:before) {
 		content: 'HTML';

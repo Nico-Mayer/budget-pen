@@ -69,8 +69,6 @@
 		display: flex;
 		flex-direction: column;
 		flex-grow: 1;
-		/* border: 1px solid #ff0; */
-		color: white;
 		width: 100%;
 		height: 100%;
 	}
