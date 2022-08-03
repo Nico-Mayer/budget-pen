@@ -27,7 +27,7 @@
 	}
 </script>
 
-<main class="w-screen h-screen flex flex-col overflow-hidden">
+<main class="w-screen h-screen flex flex-col overflow-hidden min-w-[700px]">
 	<Navbar />
 	<section class="flex h-full overflow-hidden">
 		<Sidebar />
@@ -53,6 +53,7 @@
 		height: 100%;
 		font-size: 17px;
 	}
+
 	:global(body) {
 		margin: 0;
 	}

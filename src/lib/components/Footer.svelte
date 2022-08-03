@@ -1,1 +1,1 @@
-<div class="bg-[#22272e] border-t border-white/10 h-7 w-full" />
+<div class="bg-[#1c212b] border-t border-white/5 h-7 w-full" />
