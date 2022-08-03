@@ -129,8 +129,8 @@
 
 <style>
 	:global(.tippy-box[data-theme='tippy-navbar']) {
-		@apply inline-block py-1 px-2.5 text-sm font-medium rounded-lg shadow-2xl;
-		@apply font-mono;
+		--at-apply: 'inline-block py-1 px-2.5 text-sm font-medium rounded-lg shadow-2xl';
+		--at-apply: 'font-mono';
 		--at-apply: 'dark:text-fontDark text-fontLight';
 		--at-apply: 'dark:bg-panelFgDark bg-panelBgLight';
 	}
