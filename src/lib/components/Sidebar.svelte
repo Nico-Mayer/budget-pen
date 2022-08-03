@@ -74,6 +74,7 @@
 		@apply border-t;
 		@apply border-white/5;
 		background-color: #1c212b;
+		cursor: row-resize;
 	}
 	:global(.splitpanes__splitter:before) {
 		position: absolute;
@@ -82,19 +83,21 @@
 		padding-left: 50px;
 		@apply font-mono;
 		@apply border-t-3;
-		@apply border-white/20;
+		@apply border-white/10;
 		color: white;
 		left: 0;
 		right: 0;
 		bottom: 0;
 		top: 0;
-		opacity: 1;
 		z-index: 1;
 		background-color: #1f2430;
 		background-repeat: no-repeat;
 		background-position: 15px 50%;
 		background-size: 20px;
 		width: 110px;
+	}
+	:global(.html-splitter) {
+		cursor: auto;
 	}
 	:global(.html-splitter.splitpanes__splitter:before) {
 		content: 'HTML';
