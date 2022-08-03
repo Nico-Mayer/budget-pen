@@ -68,6 +68,10 @@
 </section>
 
 <style>
+	:global(.CodeMirror-gutters) {
+		background: transparent;
+		border: none;
+	}
 	:global(.splitpanes__splitter) {
 		height: 44px;
 		position: relative;
@@ -85,7 +89,7 @@
 		padding-left: 50px;
 		@apply font-mono;
 		@apply border-t-3;
-		@apply border-white/10;
+		@apply border-black/20;
 		color: black;
 		left: 0;
 		right: 0;
@@ -94,7 +98,8 @@
 		z-index: 1;
 		--at-apply: 'dark:text-white';
 		--at-apply: 'dark:bg-#1f2430';
-		background-color: #f7f7f7;
+		--at-apply: 'dark:border-white/10;';
+		background-color: white;
 		background-repeat: no-repeat;
 		background-position: 15px 50%;
 		background-size: 20px;

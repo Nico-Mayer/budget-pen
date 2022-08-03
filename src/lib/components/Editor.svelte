@@ -31,7 +31,6 @@
 		if (!firstLoad) {
 			editor.setOption('theme', 'eclipse');
 		}
-		firstLoad = false;
 	}
 
 	let textArea;
@@ -54,6 +53,7 @@
 		editor.on('change', () => {
 			value = editor.getValue();
 		});
+		firstLoad = false;
 		return () => {
 			editor.toTextArea();
 		};
