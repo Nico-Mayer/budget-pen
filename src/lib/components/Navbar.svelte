@@ -8,20 +8,22 @@
 	$: tippyTailwindContent = $tailwind ? 'Tailwind Off' : 'Tailwind On';
 </script>
 
-<div class="h-16 bg-[#1c212b] w-full flex items-center px-3 justify-between font-mono">
+<div
+	class="h-16 dark:(bg-[#1c212b] border-none) bg-white w-full flex items-center px-3 justify-between font-mono border-b border-black/20"
+>
 	<section class="flex items-center space-x-4 select-none">
 		<div
 			class="i-line-md-buy-me-a-coffee-twotone
-		text-3xl text-[#ffcc66]"
+		text-3xl dark:text-[#ffcc66] text-[#695380]"
 		/>
-		<h1 class="font-heading text-xl text-[#cccac2]">BudgetPen</h1>
+		<h1 class="font-heading text-xl dark:text-[#cccac2] text-black">BudgetPen</h1>
 	</section>
 
-	<selection class="text-2xl h-full flex items-center text-[#cccac2] space-x-4">
+	<selection class="text-2xl h-full flex items-center dark:text-[#cccac2] text-black/70 space-x-4">
 		<section class="flex space-x-8 pr-4 items-center">
 			{#key $tailwind}
 				<button
-					class="i-simple-icons-tailwindcss hover:text-white transition duration-250 "
+					class="i-simple-icons-tailwindcss dark:(hover:text-white) hover:text-black transition duration-250"
 					class:bg-[#44A8B3]={$tailwind}
 					on:click={() => ($tailwind = !$tailwind)}
 					in:blur={{ duration: 300 }}
@@ -35,7 +37,7 @@
 			{/key}
 
 			<button
-				class="i-carbon-download hover:text-white transition duration-250 "
+				class="i-carbon-download dark:(hover:text-white) hover:text-black transition duration-250"
 				use:tippy={{
 					content: 'Download',
 					placement: 'bottom',
@@ -44,7 +46,7 @@
 				}}
 			/>
 			<button
-				class="i-carbon-save hover:text-white transition duration-250 "
+				class="i-carbon-save dark:(hover:text-white) hover:text-black transition duration-250"
 				use:tippy={{
 					content: 'Save',
 					placement: 'bottom',
@@ -57,12 +59,14 @@
 
 		<section>
 			<button
-				class="transitio duration-250 border border-[#ffcc66]/20 hover:(text-white border-[#ffcc66]/40)  text-base px-4 py-2 rounded-lg"
+				class="transitio duration-250 border border-[#695380]/50 hover:border-[#695380]/80 dark:(border-[#ffcc66]/20 hover:text-white hover:border-[#ffcc66]/40)  text-base px-4 py-2 rounded-lg"
 				>Sign Up</button
 			>
 			<button
-				class="transitio duration-250 bg-[#ffcc66]/20 text-black hover:(bg-[#ffcc66]/70 text-white) text-base px-4 py-2 rounded-lg"
-				>Log In</button
+				class="transitio duration-250 text-white bg-[#695380]/50 text-base px-4 py-2 rounded-lg
+				hover:(bg-[#695380]/80) 
+				dark:(bg-[#ffcc66]/40 text-black hover:bg-[#ffcc66]/70 hover:text-white) 
+				">Log In</button
 			>
 		</section>
 	</selection>

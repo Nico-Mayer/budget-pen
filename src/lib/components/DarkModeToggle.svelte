@@ -1,12 +1,17 @@
 <script>
-	let darkMode = true;
+	import { isDark } from '../stores/darkMode';
+	import { slide } from 'svelte/transition';
 </script>
 
-<main class="w-16 h-8 dark:bg-black bg-white flex items-center rounded-full text-base relative">
-	<button
-		class="bg-black dark:bg-[#cccac2] rounded-full h-6 w-6 flex justify-center items-center transition-all duration-700 absolute left-[4px] dark:left-[36px]"
-		on:click={() => document.documentElement.classList.toggle('dark')}
+<button
+	class="w-16 h-8 dark:(bg-[#63759925] border-none) border-black/50 border flex items-center rounded-full text-base relative"
+	on:click={() => ($isDark = !$isDark)}
+>
+	<div
+		class="bg-[#ffcc66]/50 dark:bg-[#695380] rounded-full h-7 w-7 flex justify-center items-center transition-all duration-700 absolute left-[3px] dark:left-[32px] hover:rotate-28"
 	>
-		<div class="i-carbon-sun dark:i-carbon-moon text-black" />
-	</button>
-</main>
+		{#key $isDark}
+			<div class="i-carbon-sun dark:i-carbon-moon text-black/50 dark:text-[#cccac2]" in:slide />
+		{/key}
+	</div>
+</button>

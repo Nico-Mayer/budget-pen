@@ -44,7 +44,7 @@
 	});
 </script>
 
-<section bind:this={sidebar} class="flex w-[472px] bg-[#3B4252]">
+<section bind:this={sidebar} class="flex w-[472px] dark:bg-[#3B4252]">
 	<Splitpanes horizontal={true} theme="own" firstSplitter={true}>
 		<Pane maxSize={100} class="html-pane">
 			<Editor lang={'xml'} bind:value={$html} />
@@ -61,9 +61,9 @@
 
 	<div
 		on:mousedown={handleSidebarResize}
-		class="flex h-full w-[14px] cursor-col-resize border-x border-t border-white/5 bg-[#1c212b] items-center "
+		class="flex h-full w-[14px] cursor-col-resize border-x dark:(border-white/5 bg-[#1c212b] border-t) border-black/20 items-center "
 	>
-		<div class="i-charm-menu-hamburger rotate-90 text-white/30" />
+		<div class="i-charm-menu-hamburger rotate-90 dark:text-white/30 text-black/60" />
 	</div>
 </section>
 

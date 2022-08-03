@@ -1,7 +1,9 @@
 <script>
 	// @ts-nocheck
+	import { isDark } from '../stores/darkMode';
 	import 'codemirror/lib/codemirror.css';
 	import 'codemirror/theme/ayu-mirage.css';
+	import 'codemirror/theme/eclipse.css';
 	import 'codemirror/mode/javascript/javascript';
 	import 'codemirror/mode/css/css';
 	import 'codemirror/mode/xml/xml';
@@ -14,16 +16,33 @@
 
 	export let value;
 	export let lang;
+	let editor;
+	let firstLoad = true;
+
+	let theme;
+
+	$: if ($isDark) {
+		theme = 'ayu-mirage';
+		if (!firstLoad) {
+			editor.setOption('theme', 'ayu-mirage');
+		}
+	} else {
+		theme = 'eclipse';
+		if (!firstLoad) {
+			editor.setOption('theme', 'eclipse');
+		}
+		firstLoad = false;
+	}
 
 	let textArea;
 
 	onMount(() => {
-		const editor = CodeMirror.fromTextArea(textArea, {
+		editor = CodeMirror.fromTextArea(textArea, {
 			lineWrapping: true,
 			mode: lang,
 			smartIndent: true,
 			lineNumbers: true,
-			theme: 'ayu-mirage',
+			theme: theme,
 			scrollbarStyle: 'null',
 			autoCloseTags: true,
 			autoCloseBrackets: {
