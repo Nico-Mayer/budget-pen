@@ -2,11 +2,27 @@
 	import { tailwind } from '../stores/store';
 	import { isDark } from '../stores/darkMode';
 	import { blur } from 'svelte/transition';
+	import { html, css, js } from '../stores/store';
 	import tippy from 'svelte-tippy';
 	import 'tippy.js/animations/perspective-subtle.css';
 	import DarkModeToggle from './DarkModeToggle.svelte';
+	import JSZip from 'jszip';
+	import saveAs from 'save-as';
 
 	$: tippyTailwindContent = $tailwind ? 'Tailwind Off' : 'Tailwind On';
+
+	function download() {
+		console.log('downloading');
+		var zip = new JSZip();
+
+		zip.file('index.html', $html);
+		zip.file('styles.css', $css);
+		zip.file('main.js', $js);
+
+		zip.generateAsync({ type: 'blob' }).then(function (content) {
+			saveAs(content, 'budget-pen.zip');
+		});
+	}
 </script>
 
 <main
@@ -104,6 +120,9 @@
 
 			<button
 				class="i-carbon-download icon-btn"
+				on:click={() => {
+					download();
+				}}
 				use:tippy={{
 					content: 'Download',
 					placement: 'bottom',
