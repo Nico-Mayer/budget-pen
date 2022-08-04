@@ -13,7 +13,12 @@ export default defineConfig({
 	plugins: [
 		svelte(),
 		Unocss({
-			shortcuts: [{ 'icon-btn': '' }],
+			shortcuts: [
+				{
+					'icon-btn': 'transition duration-250 hover:opacity-40',
+					btn: 'text-base bg-accentLight dark:bg-accentDark text-panelBgLight dark:text-panelBgDark py-1 px-3 rounded-full transition duration-250 hover:opacity-40'
+				}
+			],
 			presets: [
 				presetUno(),
 				presetIcons(),
@@ -29,17 +34,19 @@ export default defineConfig({
 			extractors: [extractorSvelte],
 			theme: {
 				colors: {
+					// Light theme
 					panelBgLight: '#f3f4f5',
-					panelBgDark: '#1c212b',
-					panelFgLight: '#8a9199',
-					panelFgDark: '#707a8c',
+					panelFgLight: '#00000026',
 					editorBgLight: '#f8f9fa',
-					editorBgDark: '#1f2430',
 					uiLineLight: '#6b7d8f1f',
-					uiLineDark: '#171b24',
+					accentLight: '#10b981',
 					fontLight: '#5c6166',
+					// Dark theme
+					panelBgDark: '#1c212b',
+					panelFgDark: '#707a8c',
+					editorBgDark: '#1f2430',
+					uiLineDark: '#171b24',
 					fontDark: '#CCCAC2',
-					accentLight: '#ffaa33',
 					accentDark: '#ffcc66'
 				}
 			}
