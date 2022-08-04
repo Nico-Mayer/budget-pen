@@ -1,1 +1,3 @@
-<div class="bg-[#1c212b] border-t border-white/5 h-7 w-full" />
+<div
+	class="h-7 w-full border-t bg-panelBgLight border-uiLineLight dark:(bg-panelBgDark border-ulLineDark)"
+/>

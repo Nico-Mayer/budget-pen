@@ -27,7 +27,9 @@
 	}
 </script>
 
-<main class="w-screen h-screen flex flex-col overflow-hidden min-w-[700px]">
+<main
+	class="w-screen h-screen flex flex-col overflow-hidden min-w-[700px] text-fontLight dark:text-fontDark font-mono"
+>
 	<Navbar />
 	<section class="flex h-full overflow-hidden">
 		<Sidebar />
@@ -50,6 +52,7 @@
 
 <style>
 	:global(.CodeMirror) {
+		--at-apply: 'bg-editorBgLight dark:bg-editorBgDark';
 		height: 100%;
 		font-size: 17px;
 	}
