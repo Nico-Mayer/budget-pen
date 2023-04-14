@@ -7,6 +7,6 @@ Features:
 - Tailwind Included
 - Codemirror Editor
 
-[Live Demo](https://codepen-clone-mocha.vercel.app/)
+[Live Demo](https://budget-pen.vercel.app/)
 
 ![](/public/screenshot.png)
