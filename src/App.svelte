@@ -47,6 +47,10 @@
       </html>`;
 		}, 320);
 	}
+
+	function handleError(e) {
+		console.log(e);
+	}
 </script>
 
 <main
@@ -147,6 +151,7 @@
 			{:else}
 				<iframe
 					srcdoc={srcDoc}
+					on:error={handleError}
 					sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads allow-presentation"
 					title="output"
 					frameborder="0"

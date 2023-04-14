@@ -155,10 +155,10 @@
 			<DarkModeToggle />
 		</section>
 
-		<section class="flex items-center space-x-4">
+		<!-- <section class="flex items-center space-x-4">
 			<button class="btn">Sign Up</button>
 			<button class="btn">Log In</button>
-		</section>
+		</section> -->
 	</selection>
 </main>
 
