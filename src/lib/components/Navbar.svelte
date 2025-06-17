@@ -5,7 +5,7 @@
 	import ThemeSwitcher from './ThemeSwitcher.svelte';
 </script>
 
-<nav class="flex w-full items-center justify-between border-b px-8 py-4">
+<nav class="flex w-full items-center justify-between border-b p-4">
 	<h1
 		class="flex flex-nowrap items-center gap-2 text-lg font-black transition-all duration-300 md:text-2xl"
 	>
