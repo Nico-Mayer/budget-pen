@@ -1,13 +1,12 @@
 <script lang="ts">
-	import { html } from '@codemirror/lang-html';
 	import { StateEffect, type Extension } from '@codemirror/state';
 	import { EditorView, ViewUpdate } from '@codemirror/view';
-	import { mode } from 'mode-watcher';
-	import { untrack } from 'svelte';
 	import { baseExtensions } from './extensions';
-	import { darkTheme, lightTheme } from './themes';
+	import { getTheme } from './themes';
+	export type SupportedLanguages = 'html' | 'js' | 'css';
 
-	let { docValue = $bindable() }: { docValue: string } = $props();
+	let { docValue = $bindable(''), language }: { docValue?: string; language: SupportedLanguages } =
+		$props();
 
 	const onUpdate = EditorView.updateListener.of((update: ViewUpdate) => {
 		if (update.docChanged) {
@@ -19,10 +18,10 @@
 	let parent: HTMLDivElement;
 	let theme: Extension;
 	let view: EditorView | null;
-	let extensions = [...baseExtensions, html(), onUpdate];
+	let extensions = [...baseExtensions(language), onUpdate];
 
 	$effect(() => {
-		theme = mode.current === 'light' ? lightTheme : darkTheme;
+		theme = getTheme();
 		if (!view) return;
 		view.dispatch({
 			effects: StateEffect.reconfigure.of([...extensions, theme])
@@ -31,12 +30,10 @@
 
 	$effect(() => {
 		if (!parent) return;
-		untrack(() => {
-			view = new EditorView({
-				doc: '',
-				parent: parent,
-				extensions: [...extensions, theme]
-			});
+		view = new EditorView({
+			doc: '',
+			parent: parent,
+			extensions: [...extensions, theme]
 		});
 	});
 </script>

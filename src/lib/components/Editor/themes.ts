@@ -1,10 +1,18 @@
 import { EditorView } from '@codemirror/view';
+import { mode } from 'mode-watcher';
 
-export const darkTheme = EditorView.theme(
+const fontSize = '17px';
+
+export const getTheme = () => {
+	return mode.current == 'light' ? lightTheme : darkTheme;
+};
+
+const darkTheme = EditorView.theme(
 	{
 		'&': {
 			color: '#d4d4d4',
-			backgroundColor: '#1e1e1e'
+			backgroundColor: '#1e1e1e',
+			fontSize: fontSize
 		},
 		'.cm-content': {
 			caretColor: '#ffffff'
@@ -19,4 +27,11 @@ export const darkTheme = EditorView.theme(
 	{ dark: true }
 );
 
-export const lightTheme = EditorView.theme({}, { dark: false });
+const lightTheme = EditorView.theme(
+	{
+		'&': {
+			fontSize: fontSize
+		}
+	},
+	{ dark: false }
+);
