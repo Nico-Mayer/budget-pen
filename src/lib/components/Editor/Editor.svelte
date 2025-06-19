@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { StateEffect, type Extension } from '@codemirror/state';
+	import { StateEffect } from '@codemirror/state';
 	import { EditorView, ViewUpdate } from '@codemirror/view';
+	import { onMount } from 'svelte';
 	import { baseExtensions } from './extensions';
-	import { getTheme } from './themes';
+	import { getThemeExtensions } from './themes';
 	export type SupportedLanguages = 'html' | 'js' | 'css';
 
 	let { docValue = $bindable(''), language }: { docValue?: string; language: SupportedLanguages } =
@@ -16,24 +17,30 @@
 	});
 
 	let parent: HTMLDivElement;
-	let theme: Extension;
-	let view: EditorView | null;
+
+	let view: EditorView | null = null;
+	let themeExtensions = getThemeExtensions();
 	let extensions = [...baseExtensions(language), onUpdate];
 
-	$effect(() => {
-		theme = getTheme();
-		if (!view) return;
-		view.dispatch({
-			effects: StateEffect.reconfigure.of([...extensions, theme])
-		});
-	});
-
-	$effect(() => {
+	onMount(() => {
 		if (!parent) return;
+
 		view = new EditorView({
 			doc: '',
 			parent: parent,
-			extensions: [...extensions, theme]
+			extensions: [...extensions, ...themeExtensions]
+		});
+		return () => {
+			view?.destroy();
+		};
+	});
+
+	$effect(() => {
+		if (!view) return;
+		themeExtensions = getThemeExtensions();
+
+		view.dispatch({
+			effects: StateEffect.reconfigure.of([...extensions, ...themeExtensions])
 		});
 	});
 </script>

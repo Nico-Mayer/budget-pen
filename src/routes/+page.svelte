@@ -7,7 +7,7 @@
 	let showConsole = $state(true);
 </script>
 
-<div class="flex h-svh flex-col">
+<div class="fixed flex h-svh w-svw flex-col">
 	<Navbar></Navbar>
 
 	<main class="flex h-full flex-1">
@@ -15,7 +15,7 @@
 			<Resizable.Pane defaultSize={30} minSize={20}>
 				<Sidebar></Sidebar>
 			</Resizable.Pane>
-			<Resizable.Handle />
+			<Resizable.Handle withHandle />
 			<Resizable.Pane defaultSize={80}>
 				<Resizable.PaneGroup direction="vertical">
 					<Resizable.Pane order={1} defaultSize={70}>Content</Resizable.Pane>

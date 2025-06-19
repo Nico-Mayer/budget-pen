@@ -3,36 +3,51 @@
 	import Editor from '$lib/components/Editor/Editor.svelte';
 	import * as Resizable from '$lib/components/ui/resizable/index.js';
 	import Icon from '@iconify/svelte';
-	import type { PaneAPI } from 'paneforge';
 
-	let jsPane: PaneAPI;
+	let htmlValue = $state('');
+	let jsValue = $state('');
+	let cssValue = $state('');
+
+	$inspect(htmlValue);
+	$inspect(jsValue);
+	$inspect(cssValue);
 </script>
 
-{#snippet pane(lang: SupportedLanguages, icon: string)}
-	<div class="flex h-full w-full flex-col items-center justify-center">
-		<div class="bg-sidebar flex w-full items-center gap-2 p-2">
-			<Icon {icon} height="20" width="20" class="shrink-0"></Icon>
-			<span class="font-mono">
-				{lang.toUpperCase()}
-			</span>
-		</div>
-		<div class="h-full w-full overflow-auto">
-			<Editor language={lang}></Editor>
-		</div>
+{#snippet paneHeader(lang: SupportedLanguages, icon: string)}
+	<div class="bg-sidebar flex w-full items-center gap-2 p-2">
+		<Icon {icon} height="20" width="20" class="shrink-0"></Icon>
+		<span class="font-mono">
+			{lang.toUpperCase()}
+		</span>
 	</div>
 {/snippet}
 
 <Resizable.PaneGroup direction="vertical">
 	<Resizable.Pane minSize={3.3}>
-		{@render pane('html', 'skill-icons:html')}
-	</Resizable.Pane>
-	<Resizable.Handle class="sidebar_resizable_handler" />
-	<Resizable.Pane minSize={3.3} bind:this={jsPane}>
-		{@render pane('js', 'skill-icons:javascript')}
+		<div class="flex h-full w-full flex-col items-center justify-center">
+			{@render paneHeader('html', 'skill-icons:html')}
+			<div class="h-full w-full overflow-auto">
+				<Editor language="html" bind:docValue={htmlValue}></Editor>
+			</div>
+		</div>
 	</Resizable.Pane>
 	<Resizable.Handle class="sidebar_resizable_handler" />
 	<Resizable.Pane minSize={3.3}>
-		{@render pane('css', 'skill-icons:css')}
+		<div class="flex h-full w-full flex-col items-center justify-center">
+			{@render paneHeader('js', 'skill-icons:javascript')}
+			<div class="h-full w-full overflow-auto">
+				<Editor language="js" bind:docValue={jsValue}></Editor>
+			</div>
+		</div>
+	</Resizable.Pane>
+	<Resizable.Handle class="sidebar_resizable_handler" />
+	<Resizable.Pane minSize={3.3}>
+		<div class="flex h-full w-full flex-col items-center justify-center">
+			{@render paneHeader('css', 'skill-icons:css')}
+			<div class="h-full w-full overflow-auto">
+				<Editor language="css" bind:docValue={cssValue}></Editor>
+			</div>
+		</div>
 	</Resizable.Pane>
 </Resizable.PaneGroup>
 
