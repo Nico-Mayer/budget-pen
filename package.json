@@ -47,6 +47,7 @@
 	"dependencies": {
 		"@codemirror/lang-html": "^6.4.9",
 		"codemirror": "^6.0.1",
-		"mode-watcher": "^1.0.8"
+		"mode-watcher": "^1.0.8",
+		"runed": "^0.28.0"
 	}
 }

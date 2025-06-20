@@ -2,16 +2,19 @@
 	import type { SupportedLanguages } from '$lib/components/Editor/Editor.svelte';
 	import Editor from '$lib/components/Editor/Editor.svelte';
 	import * as Resizable from '$lib/components/ui/resizable/index.js';
+	import { cssValue, htmlValue, jsValue } from '$lib/settings.svelte';
+	import { getViewportPercentage } from '$lib/utils';
 	import Icon from '@iconify/svelte';
+	import { onMount } from 'svelte';
 
-	let htmlValue = $state('');
-	let jsValue = $state('');
-	let cssValue = $state('');
+	let minSizeEditorPane: number = $state(5);
 
-	$inspect(htmlValue);
-	$inspect(jsValue);
-	$inspect(cssValue);
+	onMount(() => {
+		minSizeEditorPane = getViewportPercentage(45, 'height');
+	});
 </script>
+
+<svelte:window onresize={() => (minSizeEditorPane = getViewportPercentage(45, 'height'))} />
 
 {#snippet paneHeader(lang: SupportedLanguages, icon: string)}
 	<div class="bg-sidebar flex w-full items-center gap-2 p-2">
@@ -23,29 +26,29 @@
 {/snippet}
 
 <Resizable.PaneGroup direction="vertical">
-	<Resizable.Pane minSize={3.3}>
+	<Resizable.Pane minSize={minSizeEditorPane}>
 		<div class="flex h-full w-full flex-col items-center justify-center">
 			{@render paneHeader('html', 'skill-icons:html')}
 			<div class="h-full w-full overflow-auto">
-				<Editor language="html" bind:docValue={htmlValue}></Editor>
+				<Editor language="html" bind:docValue={htmlValue.current}></Editor>
 			</div>
 		</div>
 	</Resizable.Pane>
 	<Resizable.Handle class="sidebar_resizable_handler" />
-	<Resizable.Pane minSize={3.3}>
+	<Resizable.Pane minSize={minSizeEditorPane}>
 		<div class="flex h-full w-full flex-col items-center justify-center">
 			{@render paneHeader('js', 'skill-icons:javascript')}
 			<div class="h-full w-full overflow-auto">
-				<Editor language="js" bind:docValue={jsValue}></Editor>
+				<Editor language="js" bind:docValue={jsValue.current}></Editor>
 			</div>
 		</div>
 	</Resizable.Pane>
 	<Resizable.Handle class="sidebar_resizable_handler" />
-	<Resizable.Pane minSize={3.3}>
+	<Resizable.Pane minSize={minSizeEditorPane}>
 		<div class="flex h-full w-full flex-col items-center justify-center">
 			{@render paneHeader('css', 'skill-icons:css')}
 			<div class="h-full w-full overflow-auto">
-				<Editor language="css" bind:docValue={cssValue}></Editor>
+				<Editor language="css" bind:docValue={cssValue.current}></Editor>
 			</div>
 		</div>
 	</Resizable.Pane>

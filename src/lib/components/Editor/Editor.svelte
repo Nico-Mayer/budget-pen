@@ -26,7 +26,7 @@
 		if (!parent) return;
 
 		view = new EditorView({
-			doc: '',
+			doc: docValue,
 			parent: parent,
 			extensions: [...extensions, ...themeExtensions]
 		});
