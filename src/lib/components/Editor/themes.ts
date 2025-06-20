@@ -3,7 +3,7 @@ import { EditorView } from '@codemirror/view';
 import { tags as t } from '@lezer/highlight';
 import { mode } from 'mode-watcher';
 
-const fontSize = '17px';
+const fontSize = '16px';
 
 export const getThemeExtensions = () => {
 	return mode.current == 'light'

@@ -13,28 +13,29 @@
 	} from '$lib/settings.svelte';
 	import { Debounced } from 'runed';
 
-	let { sidebarOpen, consoleOpen } = $derived(settings.current);
+	let { sidebarOpen, consoleOpen, tailwind } = $derived(settings.current);
+	/* eslint-disable */
 	let srcDoc = new Debounced(() => {
 		return `
-        <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Document</title>
-            <script src='https://cdn.tailwindcss.com'/><\\/script>
-          </head>
-          <script>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Document</title>
+          ${tailwind ? '<script src="https://cdn.tailwindcss.com"/><\\/script>' : ''}
+        </head>
+		<script>
 			const originalLog = console.log;
 			console.log = (...args) => {
   				parent.window.postMessage({ type: 'log', args: args }, '*')
   				originalLog(...args)
 			};
-		  <\\/script>
-          <body>${htmlValue.current}</body>
-          <style>${cssValue.current}</style>
-          <script>${jsValue.current}<\\/script>
+		<\/script>
+        <body>${htmlValue.current}</body>
+        <style>${cssValue.current}</style>
+        <script>${jsValue.current}<\/script>
         </html>`;
-	}, 500);
+	}, 300);
 
 	function handleKeyDown(e: KeyboardEvent) {
 		if (e.metaKey && e.key.toLowerCase() === 'b') {

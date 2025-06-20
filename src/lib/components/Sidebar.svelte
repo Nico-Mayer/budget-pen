@@ -17,7 +17,7 @@
 <svelte:window onresize={() => (minSizeEditorPane = getViewportPercentage(45, 'height'))} />
 
 {#snippet paneHeader(lang: SupportedLanguages, icon: string)}
-	<div class="bg-sidebar flex w-full items-center gap-2 p-2">
+	<div class="bg-sidebar flex w-full items-center gap-4 px-4 py-2">
 		<Icon {icon} height="20" width="20" class="shrink-0"></Icon>
 		<span class="font-mono">
 			{lang.toUpperCase()}
