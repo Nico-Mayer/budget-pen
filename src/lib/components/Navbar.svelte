@@ -7,7 +7,7 @@
 	let { tailwind } = $derived(settings.current);
 </script>
 
-<nav class="flex w-full items-center justify-between border-b p-4">
+<nav class="flex w-full items-center justify-between border-b px-4 py-3">
 	<h1
 		class="flex flex-nowrap items-center gap-2 text-lg font-black transition-all duration-300 md:text-2xl"
 	>
@@ -81,7 +81,7 @@
 		<Tooltip.Provider>
 			<Tooltip.Root>
 				<Tooltip.Trigger
-					class={buttonVariants({ variant: tailwind ? 'secondary' : 'outline', size: 'icon' })}
+					class={buttonVariants({ variant: 'outline', size: 'icon' })}
 					onclick={toggleTailwind}
 				>
 					{#if tailwind}

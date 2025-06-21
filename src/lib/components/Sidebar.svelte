@@ -17,7 +17,7 @@
 <svelte:window onresize={() => (minSizeEditorPane = getViewportPercentage(45, 'height'))} />
 
 {#snippet paneHeader(lang: SupportedLanguages, icon: string)}
-	<div class="bg-sidebar flex w-full items-center gap-4 px-4 py-2">
+	<div class="bg-secondary flex w-full items-center gap-4 px-4 py-2">
 		<Icon {icon} height="20" width="20" class="shrink-0"></Icon>
 		<span class="font-mono">
 			{lang.toUpperCase()}
@@ -34,7 +34,7 @@
 			</div>
 		</div>
 	</Resizable.Pane>
-	<Resizable.Handle class="sidebar_resizable_handler" />
+	<Resizable.Handle class="sidebar_resizable_handle" />
 	<Resizable.Pane minSize={minSizeEditorPane}>
 		<div class="flex h-full w-full flex-col items-center justify-center">
 			{@render paneHeader('js', 'skill-icons:javascript')}
@@ -43,7 +43,7 @@
 			</div>
 		</div>
 	</Resizable.Pane>
-	<Resizable.Handle class="sidebar_resizable_handler" />
+	<Resizable.Handle class="sidebar_resizable_handle" />
 	<Resizable.Pane minSize={minSizeEditorPane}>
 		<div class="flex h-full w-full flex-col items-center justify-center">
 			{@render paneHeader('css', 'skill-icons:css')}
@@ -55,7 +55,7 @@
 </Resizable.PaneGroup>
 
 <style>
-	:global(.sidebar_resizable_handler::after) {
+	:global(.sidebar_resizable_handle::after) {
 		height: 40px;
 		transform: translate(0px, 20px);
 	}

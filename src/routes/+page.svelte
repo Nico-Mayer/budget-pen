@@ -7,13 +7,15 @@
 		cssValue,
 		htmlValue,
 		jsValue,
+		setSidebarWidth,
 		settings,
 		toggleConsole,
 		toggleSidebar
 	} from '$lib/settings.svelte';
 	import { Debounced } from 'runed';
 
-	let { sidebarOpen, consoleOpen, tailwind } = $derived(settings.current);
+	let { sidebarOpen, consoleOpen, tailwind, sidebarWidth } = $derived(settings.current);
+
 	/* eslint-disable */
 	let srcDoc = new Debounced(() => {
 		return `
@@ -46,6 +48,10 @@
 			toggleConsole();
 		}
 	}
+
+	function handleSidebarResize(size: number, prevSize: number | undefined) {
+		setSidebarWidth(size);
+	}
 </script>
 
 <svelte:window onkeydown={handleKeyDown} />
@@ -56,13 +62,18 @@
 	<main class="flex h-full flex-1">
 		<Resizable.PaneGroup direction="horizontal">
 			{#if sidebarOpen}
-				<Resizable.Pane defaultSize={30} minSize={20} order={1}>
+				<Resizable.Pane
+					defaultSize={sidebarWidth}
+					minSize={20}
+					order={1}
+					onResize={handleSidebarResize}
+				>
 					<Sidebar></Sidebar>
 				</Resizable.Pane>
-				<Resizable.Handle withHandle />
+				<Resizable.Handle withHandle class="test" />
 			{/if}
 
-			<Resizable.Pane defaultSize={80} order={2}>
+			<Resizable.Pane defaultSize={100 - sidebarWidth} order={2}>
 				<Resizable.PaneGroup direction="vertical">
 					<Resizable.Pane order={1} defaultSize={70}>
 						<div class="h-full bg-white">

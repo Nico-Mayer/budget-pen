@@ -31,10 +31,15 @@ const darkTheme = EditorView.theme(
 			backgroundColor: '#264f78'
 		},
 		'.cm-gutters': {
-			backgroundColor: 'transparent'
+			backgroundColor: 'transparent',
+			borderRight: '1px solid transparent'
+		},
+		'.cm-gutterElement': {
+			opacity: '0.5'
 		},
 		'.cm-activeLineGutter': {
-			backgroundColor: 'transparent'
+			backgroundColor: 'transparent',
+			opacity: '1.0'
 		}
 	},
 	{ dark: true }
@@ -72,10 +77,15 @@ const lightTheme = EditorView.theme(
 			backgroundColor: 'transparent'
 		},
 		'.cm-gutters': {
-			backgroundColor: 'transparent'
+			backgroundColor: 'transparent',
+			borderRight: '1px solid transparent'
+		},
+		'.cm-gutterElement': {
+			opacity: '0.5'
 		},
 		'.cm-activeLineGutter': {
-			backgroundColor: 'transparent'
+			backgroundColor: 'transparent',
+			opacity: '1.0'
 		}
 	},
 	{ dark: false }

@@ -2,6 +2,7 @@ import { PersistedState } from 'runed';
 
 export const settings = new PersistedState('settings', {
 	sidebarOpen: true,
+	sidebarWidth: 20,
 	consoleOpen: false,
 	tailwind: false
 });
@@ -17,4 +18,7 @@ export function toggleConsole() {
 }
 export function toggleTailwind() {
 	settings.current.tailwind = !settings.current.tailwind;
+}
+export function setSidebarWidth(width: number) {
+	settings.current.sidebarWidth = width;
 }
