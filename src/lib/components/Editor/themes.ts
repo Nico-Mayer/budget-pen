@@ -31,7 +31,7 @@ const darkTheme = EditorView.theme(
 			backgroundColor: '#264f78'
 		},
 		'.cm-gutters': {
-			backgroundColor: 'transparent',
+			backgroundColor: 'var(--background)',
 			borderRight: '1px solid transparent'
 		},
 		'.cm-gutterElement': {
@@ -77,7 +77,7 @@ const lightTheme = EditorView.theme(
 			backgroundColor: 'transparent'
 		},
 		'.cm-gutters': {
-			backgroundColor: 'transparent',
+			backgroundColor: 'var(--background)',
 			borderRight: '1px solid transparent'
 		},
 		'.cm-gutterElement': {

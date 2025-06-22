@@ -11,13 +11,12 @@
 
 	const onUpdate = EditorView.updateListener.of((update: ViewUpdate) => {
 		if (update.docChanged) {
-			console.log('Updated content:', update.state.doc.toString());
+			// console.log('Updated content:', update.state.doc.toString());
 			docValue = update.state.doc.toString();
 		}
 	});
 
 	let parent: HTMLDivElement;
-
 	let view: EditorView | null = null;
 	let themeExtensions = getThemeExtensions();
 	let extensions = [...baseExtensions(language), onUpdate];
@@ -42,6 +41,22 @@
 		view.dispatch({
 			effects: StateEffect.reconfigure.of([...extensions, ...themeExtensions])
 		});
+	});
+
+	$effect(() => {
+		if (!view) return;
+		console.log('outside change');
+
+		const currentContent = view.state.doc.toString();
+		if (docValue !== currentContent) {
+			view.dispatch({
+				changes: {
+					from: 0,
+					to: currentContent.length,
+					insert: docValue
+				}
+			});
+		}
 	});
 </script>
 

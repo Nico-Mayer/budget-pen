@@ -10,7 +10,7 @@
 	<Button
 		variant={sidebarOpen ? 'secondary' : 'ghost'}
 		size="icon"
-		class="size-6"
+		class="hidden size-6 xl:flex"
 		onclick={toggleSidebar}
 	>
 		<PanelLeft class="size-3"></PanelLeft>

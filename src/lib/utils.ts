@@ -23,3 +23,32 @@ export function getViewportPercentage(targetPixels: number, axis: Axis = 'width'
 	const percentage = (targetPixels / viewportSize) * 100;
 	return percentage;
 }
+
+import babelPlugin from 'prettier/plugins/babel';
+import estreePlugin from 'prettier/plugins/estree';
+import htmlPlugin from 'prettier/plugins/html';
+import cssPlugin from 'prettier/plugins/postcss';
+import prettier from 'prettier/standalone';
+
+export async function formatCode(code: string, language: string) {
+	const parsers: Record<string, string> = {
+		js: 'babel',
+		javascript: 'babel',
+		html: 'html',
+		css: 'css'
+	};
+
+	const parser = parsers[language.toLowerCase()];
+	if (!parser) {
+		throw new Error(`Unsupported language: ${language}`);
+	}
+
+	return prettier.format(code, {
+		parser,
+		plugins: [babelPlugin, estreePlugin, htmlPlugin, cssPlugin],
+		tabWidth: 2,
+		semi: true,
+		singleQuote: false,
+		printWidth: 70
+	});
+}

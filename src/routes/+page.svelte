@@ -1,8 +1,10 @@
 <script lang="ts">
+	import Editor from '$lib/components/Editor/Editor.svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Statusbar from '$lib/components/Statusbar.svelte';
 	import * as Resizable from '$lib/components/ui/resizable/index.js';
+	import * as Tabs from '$lib/components/ui/tabs/index.js';
 	import {
 		cssValue,
 		htmlValue,
@@ -59,7 +61,7 @@
 <div class="fixed flex h-svh w-svw flex-col">
 	<Navbar></Navbar>
 
-	<main class="flex h-full flex-1">
+	<div class="hidden h-full flex-1 xl:flex">
 		<Resizable.PaneGroup direction="horizontal">
 			{#if sidebarOpen}
 				<Resizable.Pane
@@ -94,6 +96,41 @@
 				</Resizable.PaneGroup>
 			</Resizable.Pane>
 		</Resizable.PaneGroup>
-	</main>
+	</div>
+
+	<div class="flex flex-1 xl:hidden">
+		<Tabs.Root value="html" class="w-full">
+			<div class="flex w-full p-1">
+				<Tabs.List class="w-full">
+					<Tabs.Trigger value="html">HTML</Tabs.Trigger>
+					<Tabs.Trigger value="js">JS</Tabs.Trigger>
+					<Tabs.Trigger value="css">CSS</Tabs.Trigger>
+					<Tabs.Trigger value="result">Result</Tabs.Trigger>
+				</Tabs.List>
+			</div>
+
+			<Tabs.Content value="html">
+				<Editor language="html" bind:docValue={htmlValue.current}></Editor>
+			</Tabs.Content>
+			<Tabs.Content value="js">
+				<Editor language="js" bind:docValue={jsValue.current}></Editor>
+			</Tabs.Content>
+			<Tabs.Content value="css">
+				<Editor language="css" bind:docValue={cssValue.current}></Editor>
+			</Tabs.Content>
+			<Tabs.Content value="result">
+				<div class="h-full bg-white">
+					<iframe
+						srcdoc={srcDoc.current}
+						sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads allow-presentation"
+						title="output"
+						frameborder="0"
+						width="100%"
+						height="100%"
+					></iframe>
+				</div>
+			</Tabs.Content>
+		</Tabs.Root>
+	</div>
 	<Statusbar></Statusbar>
 </div>
