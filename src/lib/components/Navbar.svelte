@@ -9,7 +9,7 @@
 
 <nav class="flex w-full items-center justify-between border-b px-4 py-3">
 	<h1
-		class="flex flex-nowrap items-center gap-2 text-lg font-black transition-all duration-300 md:text-2xl"
+		class="flex flex-nowrap items-center gap-2 text-lg font-bold tracking-tighter text-balance transition-all duration-300 md:text-2xl"
 	>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"

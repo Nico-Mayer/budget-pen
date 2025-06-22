@@ -98,9 +98,10 @@
 		</Resizable.PaneGroup>
 	</div>
 
+	<!-- Mobile View -->
 	<div class="flex flex-1 xl:hidden">
 		<Tabs.Root value="html" class="w-full">
-			<div class="flex w-full p-1">
+			<div class="flex w-full px-4 py-2">
 				<Tabs.List class="w-full">
 					<Tabs.Trigger value="html">HTML</Tabs.Trigger>
 					<Tabs.Trigger value="js">JS</Tabs.Trigger>

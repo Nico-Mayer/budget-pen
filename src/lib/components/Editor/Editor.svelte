@@ -45,7 +45,6 @@
 
 	$effect(() => {
 		if (!view) return;
-		console.log('outside change');
 
 		const currentContent = view.state.doc.toString();
 		if (docValue !== currentContent) {
