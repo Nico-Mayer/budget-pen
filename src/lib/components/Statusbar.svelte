@@ -18,7 +18,6 @@
 				variant: isOpen ? 'secondary' : 'ghost',
 				size: 'icon'
 			}),
-			'hidden xl:flex',
 			'size-6'
 		);
 	}

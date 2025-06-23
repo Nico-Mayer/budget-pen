@@ -4,6 +4,7 @@ export const settings = new PersistedState('settings', {
 	sidebarOpen: true,
 	sidebarWidth: 20,
 	consoleOpen: false,
+	consoleHeight: 20,
 	tailwind: false
 });
 export const htmlValue = new PersistedState('html-value', '');
@@ -21,4 +22,7 @@ export function toggleTailwind() {
 }
 export function setSidebarWidth(width: number) {
 	settings.current.sidebarWidth = width;
+}
+export function setConsoleHeight(height: number) {
+	settings.current.consoleHeight = height;
 }

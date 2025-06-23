@@ -1,10 +1,23 @@
-<script>
+<script lang="ts">
 	import { buttonVariants } from '$lib/components/ui/button';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
 	import { settings, toggleTailwind } from '$lib/settings.svelte';
-	import { Download } from '@lucide/svelte';
+	import { Download, SquareArrowOutUpRight } from '@lucide/svelte';
 	import ThemeSwitcher from './ThemeSwitcher.svelte';
 	let { tailwind } = $derived(settings.current);
+
+	function openInNewTab() {
+		const preview = document.querySelector('#preview') as HTMLIFrameElement;
+		if (!preview) return;
+		const blob = new Blob([preview.srcdoc], { type: 'text/html' });
+		const url = URL.createObjectURL(blob);
+		const newWindow = window.open(url, '_blank');
+
+		if (newWindow) {
+			newWindow.focus();
+			setTimeout(() => URL.revokeObjectURL(url), 1000);
+		}
+	}
 </script>
 
 <nav class="flex w-full items-center justify-between border-b px-4 py-3">
@@ -118,6 +131,18 @@
 				</Tooltip.Trigger>
 				<Tooltip.Content>
 					<p>Download</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+
+			<Tooltip.Root>
+				<Tooltip.Trigger
+					class={buttonVariants({ variant: 'outline', size: 'icon' })}
+					onclick={openInNewTab}
+				>
+					<SquareArrowOutUpRight></SquareArrowOutUpRight>
+				</Tooltip.Trigger>
+				<Tooltip.Content>
+					<p>Open in new Tab</p>
 				</Tooltip.Content>
 			</Tooltip.Root>
 		</Tooltip.Provider>

@@ -9,6 +9,7 @@
 		cssValue,
 		htmlValue,
 		jsValue,
+		setConsoleHeight,
 		setSidebarWidth,
 		settings,
 		toggleConsole,
@@ -16,7 +17,9 @@
 	} from '$lib/settings.svelte';
 	import { Debounced } from 'runed';
 
-	let { sidebarOpen, consoleOpen, tailwind, sidebarWidth } = $derived(settings.current);
+	let { sidebarOpen, consoleOpen, consoleHeight, tailwind, sidebarWidth } = $derived(
+		settings.current
+	);
 
 	/* eslint-disable */
 	let srcDoc = new Debounced(() => {
@@ -54,6 +57,9 @@
 	function handleSidebarResize(size: number, prevSize: number | undefined) {
 		setSidebarWidth(size);
 	}
+	function handleConsoleResize(size: number, prevSize: number | undefined) {
+		setConsoleHeight(size);
+	}
 </script>
 
 <svelte:window onkeydown={handleKeyDown} />
@@ -61,7 +67,7 @@
 <div class="fixed flex h-svh w-svw flex-col">
 	<Navbar></Navbar>
 
-	<div class="hidden h-full flex-1 xl:flex">
+	<div class="hidden flex-1 xl:flex">
 		<Resizable.PaneGroup direction="horizontal">
 			{#if sidebarOpen}
 				<Resizable.Pane
@@ -77,9 +83,10 @@
 
 			<Resizable.Pane defaultSize={100 - sidebarWidth} order={2}>
 				<Resizable.PaneGroup direction="vertical">
-					<Resizable.Pane order={1} defaultSize={70}>
+					<Resizable.Pane order={1} defaultSize={100 - consoleHeight}>
 						<div class="h-full bg-white">
 							<iframe
+								id="preview"
 								srcdoc={srcDoc.current}
 								sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads allow-presentation"
 								title="output"
@@ -91,7 +98,9 @@
 					</Resizable.Pane>
 					{#if consoleOpen}
 						<Resizable.Handle withHandle />
-						<Resizable.Pane order={2} defaultSize={30}>Console</Resizable.Pane>
+						<Resizable.Pane order={2} defaultSize={consoleHeight} onResize={handleConsoleResize}
+							>Console</Resizable.Pane
+						>
 					{/if}
 				</Resizable.PaneGroup>
 			</Resizable.Pane>
@@ -133,5 +142,6 @@
 			</Tabs.Content>
 		</Tabs.Root>
 	</div>
+
 	<Statusbar></Statusbar>
 </div>
