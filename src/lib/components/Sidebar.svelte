@@ -6,11 +6,16 @@
 	import { cssValue, htmlValue, jsValue } from '$lib/settings.svelte';
 	import { formatCode, getViewportPercentage } from '$lib/utils';
 	import Icon from '@iconify/svelte';
-	import { SquareCode } from '@lucide/svelte';
+	import { ChevronsUpDown, SquareCode } from '@lucide/svelte';
+	import { Pane } from 'paneforge';
 	import { onMount } from 'svelte';
 	import { buttonVariants } from './ui/button/button.svelte';
 
 	let minSizeEditorPane: number = $state(5);
+
+	let htmlPane: ReturnType<typeof Pane>;
+	let jsPane: ReturnType<typeof Pane>;
+	let cssPane: ReturnType<typeof Pane>;
 
 	onMount(() => {
 		minSizeEditorPane = getViewportPercentage(45, 'height');
@@ -31,6 +36,11 @@
 			console.error('Formatting failed:', error);
 		}
 	}
+
+	function handleExpand(paneType: string) {
+		console.log(paneType);
+		htmlPane.expand();
+	}
 </script>
 
 <svelte:window onresize={() => (minSizeEditorPane = getViewportPercentage(45, 'height'))} />
@@ -44,7 +54,7 @@
 			</span>
 		</div>
 
-		<div class="z-100">
+		<div class="z-100 flex items-center gap-1">
 			<Tooltip.Provider>
 				<Tooltip.Root>
 					<Tooltip.Trigger
@@ -57,13 +67,31 @@
 						<p>Format</p>
 					</Tooltip.Content>
 				</Tooltip.Root>
+
+				<Tooltip.Root>
+					<Tooltip.Trigger
+						onclick={() => handleExpand(lang)}
+						class={buttonVariants({ variant: 'ghost', size: 'icon' }) + ' !size-6 cursor-pointer'}
+					>
+						<ChevronsUpDown></ChevronsUpDown>
+					</Tooltip.Trigger>
+					<Tooltip.Content>
+						<p>Expand</p>
+					</Tooltip.Content>
+				</Tooltip.Root>
 			</Tooltip.Provider>
 		</div>
 	</div>
 {/snippet}
 
 <Resizable.PaneGroup direction="vertical">
-	<Resizable.Pane minSize={minSizeEditorPane}>
+	<Resizable.Pane
+		bind:this={htmlPane}
+		collapsible={true}
+		collapsedSize={minSizeEditorPane}
+		minSize={minSizeEditorPane}
+		id="html-pane"
+	>
 		<div class="flex h-full w-full flex-col items-center justify-center">
 			{@render paneHeader('html', 'skill-icons:html')}
 			<div class="h-full w-full overflow-auto">
@@ -72,7 +100,12 @@
 		</div>
 	</Resizable.Pane>
 	<Resizable.Handle class="sidebar_resizable_handle" />
-	<Resizable.Pane minSize={minSizeEditorPane}>
+	<Resizable.Pane
+		bind:this={jsPane}
+		minSize={minSizeEditorPane}
+		collapsible={true}
+		collapsedSize={minSizeEditorPane}
+	>
 		<div class="flex h-full w-full flex-col items-center justify-center">
 			{@render paneHeader('js', 'skill-icons:javascript')}
 			<div class="h-full w-full overflow-auto">
@@ -81,7 +114,7 @@
 		</div>
 	</Resizable.Pane>
 	<Resizable.Handle class="sidebar_resizable_handle" />
-	<Resizable.Pane minSize={minSizeEditorPane}>
+	<Resizable.Pane bind:this={cssPane} minSize={minSizeEditorPane} id="css-pane">
 		<div class="flex h-full w-full flex-col items-center justify-center">
 			{@render paneHeader('css', 'skill-icons:css')}
 			<div class="h-full w-full overflow-auto">
