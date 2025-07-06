@@ -45,6 +45,7 @@
 	},
 	"dependencies": {
 		"@codemirror/lang-html": "^6.4.9",
+		"@vercel/analytics": "^1.5.0",
 		"codemirror": "^6.0.2",
 		"mode-watcher": "^1.0.8",
 		"prettier": "^3.6.1",

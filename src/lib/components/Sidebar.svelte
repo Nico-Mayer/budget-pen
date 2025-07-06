@@ -6,7 +6,7 @@
 	import { cssValue, htmlValue, jsValue } from '$lib/settings.svelte';
 	import { formatCode, getViewportPercentage } from '$lib/utils';
 	import Icon from '@iconify/svelte';
-	import { ChevronsUpDown, SquareCode } from '@lucide/svelte';
+	import { SquareCode } from '@lucide/svelte';
 	import { Pane } from 'paneforge';
 	import { onMount } from 'svelte';
 	import { buttonVariants } from './ui/button/button.svelte';
@@ -68,7 +68,7 @@
 					</Tooltip.Content>
 				</Tooltip.Root>
 
-				<Tooltip.Root>
+				<!-- <Tooltip.Root>
 					<Tooltip.Trigger
 						onclick={() => handleExpand(lang)}
 						class={buttonVariants({ variant: 'ghost', size: 'icon' }) + ' !size-6 cursor-pointer'}
@@ -78,7 +78,7 @@
 					<Tooltip.Content>
 						<p>Expand</p>
 					</Tooltip.Content>
-				</Tooltip.Root>
+				</Tooltip.Root> -->
 			</Tooltip.Provider>
 		</div>
 	</div>
