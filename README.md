@@ -9,4 +9,4 @@ Features:
 
 [Live Demo](https://budget-pen.vercel.app/)
 
-![](/public/screenshot.png)
+![](screenshot.png)
