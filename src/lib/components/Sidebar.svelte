@@ -6,7 +6,7 @@
 	import { cssValue, htmlValue, jsValue } from '$lib/settings.svelte';
 	import { formatCode, getViewportPercentage } from '$lib/utils';
 	import Icon from '@iconify/svelte';
-	import { SquareCode } from '@lucide/svelte';
+	import { ChevronsUpDown, SquareCode } from '@lucide/svelte';
 	import { Pane } from 'paneforge';
 	import { onMount } from 'svelte';
 	import { buttonVariants } from './ui/button/button.svelte';
@@ -38,8 +38,20 @@
 	}
 
 	function handleExpand(paneType: string) {
-		console.log(paneType);
-		htmlPane.expand();
+		const paneMap = new Map([
+			['html', htmlPane],
+			['js', jsPane],
+			['css', cssPane]
+		]);
+
+		const targetPane = paneMap.get(paneType);
+		if (!targetPane) {
+			console.warn(`Unknown pane type: ${paneType}`);
+			return;
+		}
+
+		paneMap.forEach((pane) => pane.resize(0));
+		targetPane.resize(100);
 	}
 </script>
 
@@ -68,7 +80,7 @@
 					</Tooltip.Content>
 				</Tooltip.Root>
 
-				<!-- <Tooltip.Root>
+				<Tooltip.Root>
 					<Tooltip.Trigger
 						onclick={() => handleExpand(lang)}
 						class={buttonVariants({ variant: 'ghost', size: 'icon' }) + ' !size-6 cursor-pointer'}
@@ -78,7 +90,7 @@
 					<Tooltip.Content>
 						<p>Expand</p>
 					</Tooltip.Content>
-				</Tooltip.Root> -->
+				</Tooltip.Root>
 			</Tooltip.Provider>
 		</div>
 	</div>
@@ -90,7 +102,6 @@
 		collapsible={true}
 		collapsedSize={minSizeEditorPane}
 		minSize={minSizeEditorPane}
-		id="html-pane"
 	>
 		<div class="flex h-full w-full flex-col items-center justify-center">
 			{@render paneHeader('html', 'skill-icons:html')}
@@ -114,7 +125,12 @@
 		</div>
 	</Resizable.Pane>
 	<Resizable.Handle class="sidebar_resizable_handle" />
-	<Resizable.Pane bind:this={cssPane} minSize={minSizeEditorPane} id="css-pane">
+	<Resizable.Pane
+		bind:this={cssPane}
+		minSize={minSizeEditorPane}
+		collapsedSize={minSizeEditorPane}
+		collapsible={true}
+	>
 		<div class="flex h-full w-full flex-col items-center justify-center">
 			{@render paneHeader('css', 'skill-icons:css')}
 			<div class="h-full w-full overflow-auto">
