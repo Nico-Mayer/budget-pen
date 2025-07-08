@@ -43,7 +43,7 @@
 				<Terminal class="size-3"></Terminal>
 			</Tooltip.Trigger>
 			<Tooltip.Content class="flex items-center">
-				<span>Toggle Sidebar</span>
+				<span>Toggle Console</span>
 				<div class="ml-3 flex flex-nowrap gap-2">
 					<kbd class={kbdClass}>Ctrl</kbd>
 					<kbd class={kbdClass}>J</kbd>

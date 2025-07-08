@@ -11,7 +11,6 @@
 
 	const onUpdate = EditorView.updateListener.of((update: ViewUpdate) => {
 		if (update.docChanged) {
-			// console.log('Updated content:', update.state.doc.toString());
 			docValue = update.state.doc.toString();
 		}
 	});
