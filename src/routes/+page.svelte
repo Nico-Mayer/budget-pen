@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Console, { type Entry } from '$lib/components/Console.svelte';
+	import Console from '$lib/components/Console.svelte';
 	import Editor from '$lib/components/Editor/Editor.svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
@@ -10,43 +10,14 @@
 		cssValue,
 		htmlValue,
 		jsValue,
-		setConsoleHeight,
 		setSidebarWidth,
 		settings,
 		toggleConsole,
 		toggleSidebar
 	} from '$lib/settings.svelte';
 	import { Debounced } from 'runed';
-	import { onMount } from 'svelte';
 
-	let iframe: HTMLIFrameElement;
-	let consoleEntries: Entry[] = $state([]);
-
-	onMount(() => {
-		const handler = (e: MessageEvent) => {
-			if (e.data.type === 'log') {
-				const entry = {
-					id: crypto.randomUUID(),
-					content: e.data.args.join(' ')
-				};
-				consoleEntries.push(entry);
-			}
-		};
-
-		iframe?.addEventListener('load', () => {
-			consoleEntries = [];
-		});
-
-		window.addEventListener('message', handler);
-
-		return () => {
-			window.removeEventListener('message', handler);
-		};
-	});
-
-	let { sidebarOpen, consoleOpen, consoleHeight, tailwind, sidebarWidth } = $derived(
-		settings.current
-	);
+	let { sidebarOpen, consoleHeight, tailwind, sidebarWidth } = $derived(settings.current);
 
 	/* eslint-disable */
 	let srcDoc = new Debounced(() => {
@@ -84,9 +55,6 @@
 	function handleSidebarResize(size: number, prevSize: number | undefined) {
 		setSidebarWidth(size);
 	}
-	function handleConsoleResize(size: number, prevSize: number | undefined) {
-		setConsoleHeight(size);
-	}
 </script>
 
 <svelte:window onkeydown={handleKeyDown} />
@@ -113,7 +81,6 @@
 					<Resizable.Pane order={1} defaultSize={100 - consoleHeight}>
 						<div class="h-full bg-white">
 							<iframe
-								bind:this={iframe}
 								id="preview"
 								srcdoc={srcDoc.current}
 								sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads allow-presentation"
@@ -124,12 +91,7 @@
 							></iframe>
 						</div>
 					</Resizable.Pane>
-					{#if consoleOpen}
-						<Resizable.Handle withHandle />
-						<Resizable.Pane order={2} defaultSize={consoleHeight} onResize={handleConsoleResize}>
-							<Console {consoleEntries}></Console>
-						</Resizable.Pane>
-					{/if}
+					<Console></Console>
 				</Resizable.PaneGroup>
 			</Resizable.Pane>
 		</Resizable.PaneGroup>
