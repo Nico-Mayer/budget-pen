@@ -22,24 +22,57 @@
 	/* eslint-disable */
 	let srcDoc = new Debounced(() => {
 		return `
-      <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Document</title>
-          ${tailwind ? `<script src='https://cdn.tailwindcss.com'/><\/script>` : ''}
-        </head>
-		<script>
-			const originalLog = console.log;
-			console.log = (...args) => {
-  		        parent.window.postMessage({ type: 'log', args: args, }, '*')
-          		originalLog(...args)
-			};
-		<\/script>
-        <body>${htmlValue.current}</body>
-        <style>${cssValue.current}</style>
-		<script>${jsValue.current}<\/script>
-      </html>`;
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        ${tailwind ? `<script src="https://cdn.tailwindcss.com"><\\/script>` : ''}
+      </head>
+      <body>${htmlValue.current}</body>
+      <style>${cssValue.current}</style>
+
+      <script>
+        (function() {
+          const originalLog = console.log;
+
+          function serialize(arg) {
+            if (arg instanceof Element) {
+              let desc = '[DOM Element: <' + arg.tagName.toLowerCase();
+              if (arg.id) desc += ' id="' + arg.id + '"';
+              if (arg.className) desc += ' class="' + arg.className + '"';
+              desc += '>]';
+              return desc;
+            }
+            if (typeof arg === 'function') return '[Function]';
+            if (arg instanceof Error) return arg.stack || arg.message;
+
+            if (arg === null || typeof arg !== 'object') return arg;
+
+            try {
+              return JSON.parse(JSON.stringify(arg));
+            } catch {
+              return String(arg);
+            }
+          }
+
+          console.log = (...args) => {
+            try {
+              const safeArgs = args.map(serialize);
+              parent.postMessage({ type: 'log', args: safeArgs }, '*');
+            } catch (e) {
+              originalLog('Log proxy error:', e);
+            }
+            originalLog(...args);
+          };
+        })();
+      <\/script>
+
+      <script>
+        ${jsValue.current}
+      <\/script>
+    </html>
+  `;
 	}, 300);
 
 	function handleKeyDown(e: KeyboardEvent) {
@@ -82,6 +115,7 @@
 						<div class="h-full bg-white">
 							<iframe
 								id="preview"
+								loading="lazy"
 								srcdoc={srcDoc.current}
 								sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads allow-presentation"
 								title="output"
