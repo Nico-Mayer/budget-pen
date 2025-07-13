@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { buttonVariants } from '$lib/components/ui/button';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
-	import { settings, toggleTailwind } from '$lib/settings.svelte';
+	import { cssValue, htmlValue, jsValue, settings, toggleTailwind } from '$lib/settings.svelte';
 	import { Download, SquareArrowOutUpRight } from '@lucide/svelte';
+	import JSZip from 'jszip';
 	import ThemeSwitcher from './ThemeSwitcher.svelte';
 	let { tailwind } = $derived(settings.current);
 
@@ -17,6 +18,38 @@
 			newWindow.focus();
 			setTimeout(() => URL.revokeObjectURL(url), 1000);
 		}
+	}
+
+	function handleDownload() {
+		const zip = new JSZip();
+		/* eslint-disable */
+		const fullHtml = `
+		<html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+            <link rel="stylesheet" href="styles.css">
+            ${tailwind ? `<script src='https://cdn.tailwindcss.com'/><\/script>` : ''}
+          </head>
+          <body>
+            ${htmlValue.current}
+            <script src="main.js"><\/script>
+          </body>
+        </html>`;
+
+		zip.file('index.html', fullHtml);
+		zip.file('main.js', jsValue.current);
+		zip.file('styles.css', cssValue.current);
+
+		zip.generateAsync({ type: 'blob' }).then((content) => {
+			const link = document.createElement('a');
+			const url = URL.createObjectURL(content);
+			link.href = url;
+			link.download = 'budget-pen.zip';
+			link.click();
+			link.remove();
+		});
 	}
 </script>
 
@@ -126,7 +159,10 @@
 			</Tooltip.Root>
 
 			<Tooltip.Root>
-				<Tooltip.Trigger class={buttonVariants({ variant: 'outline', size: 'icon' })}>
+				<Tooltip.Trigger
+					onclick={handleDownload}
+					class={buttonVariants({ variant: 'outline', size: 'icon' })}
+				>
 					<Download></Download>
 				</Tooltip.Trigger>
 				<Tooltip.Content>
