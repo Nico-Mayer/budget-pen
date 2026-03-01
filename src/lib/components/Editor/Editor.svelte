@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { StateEffect } from '@codemirror/state';
-	import { EditorView, ViewUpdate } from '@codemirror/view';
+	import { EditorView, type ViewUpdate } from '@codemirror/view';
 	import { onMount } from 'svelte';
 	import { baseExtensions } from './extensions';
 	import { getThemeExtensions } from './themes';
@@ -18,6 +18,7 @@
 	let parent: HTMLDivElement;
 	let view: EditorView | null = null;
 	let themeExtensions = getThemeExtensions();
+	// svelte-ignore state_referenced_locally
 	let extensions = [...baseExtensions(language), onUpdate];
 
 	onMount(() => {
